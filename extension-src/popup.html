@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ITIN tools</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="brand">
+        <div class="brand-logo">IT</div>
+        <div>
+          <h1 class="brand-title">ITIN tools <span id="ext-version" class="version-pill">v2.1.0</span></h1>
+          <p class="brand-subtitle">纯本地 · 开源免费美卡 ITIN 辅助工具</p>
+        </div>
+      </div>
+      <span id="status-badge" class="badge badge-auth">纯本地 · 免费版</span>
+    </header>
+
+    <!-- Launch Animation View -->
+    <div id="launch-view" class="card center-box hidden">
+      <div class="launch-spinner-wrap">
+        <div class="spinner spinner-lg"></div>
+      </div>
+      <h3 id="launch-title" class="launch-title">正在跳转至目标页面</h3>
+      <p id="launch-desc" class="launch-desc">
+        正在加载本地组件，<strong>预计需要 6~8 秒</strong>跳转，请耐心等待...
+      </p>
+      <div class="launch-progress-track">
+        <div id="launch-progress-bar" class="launch-progress-bar"></div>
+      </div>
+    </div>
+
+    <!-- Global Message / Error Toast -->
+    <div id="message-bar" class="message-bar hidden"></div>
+
+    <!-- Main View (Pure Local & Free) -->
+    <div id="main-view">
+      <div class="local-banner">
+        <div class="local-banner-title">🔓 开源免费 · 100% 纯本地运行</div>
+        <div class="local-banner-desc">
+          无需授权码、不限设备与次数、零后台通信。全部辅助脚本与分析均在您的浏览器本地执行。
+        </div>
+      </div>
+
+      <div class="action-buttons-group">
+        <button id="btn-start-register" class="btn btn-success btn-large" type="button">
+          🚀 开始注册 茶色 网银
+        </button>
+        <button id="btn-start-pre" class="btn btn-pre btn-large" type="button">
+          <span>💳 ITIN 茶色 信用卡 Pre</span>
+        </button>
+        <button id="btn-start-bofa" class="btn btn-bofa btn-large" type="button">
+          <span>🏦 ITIN BOA 信用卡 Pre</span>
+        </button>
+        <button id="btn-start-credit" class="btn btn-credit btn-large" type="button">
+          <span>📊 Credit.com ITIN 注册</span>
+        </button>
+        <button id="btn-start-c1" class="btn btn-c1 btn-large" type="button">
+          <span>📮 C1 强制地址</span>
+        </button>
+        <button id="btn-start-alliant" class="btn btn-alliant btn-large" type="button">
+          <span>🛡️ Alliant 拒绝分析与取消</span>
+        </button>
+      </div>
+      <p class="action-hint">
+        点击对应按钮将自动配置本地规则并打开目标页面
+      </p>
+    </div>
+
+    <!-- BOA Secondary View (Card Selection) -->
+    <div id="bofa-view" class="hidden">
+      <div class="bofa-header">
+        <button id="btn-back-bofa" class="btn-back" type="button">← 返回主界面</button>
+        <span class="bofa-header-title">选择 BOA 信用卡 Pre</span>
+      </div>
+      <div class="bofa-intro-tip">
+        选择想要申请的卡片，将自动打开预审批页面并在本地注入 ITIN 校验监听器：
+      </div>
+
+      <div id="bofa-cards-list" class="bofa-cards-list">
+        <div class="bofa-card-item" data-card-id="1">
+          <img src="cards/bofa-1.png" class="bofa-card-img" alt="Customized Cash Rewards" />
+          <div class="bofa-card-details">
+            <div class="bofa-card-title">Customized Cash Rewards</div>
+            <div class="bofa-card-desc">3% 选定类别返现 · 无年费</div>
+          </div>
+          <button class="bofa-card-action" type="button">申请 Pre →</button>
+        </div>
+
+        <div class="bofa-card-item" data-card-id="2">
+          <img src="cards/bofa-2.png" class="bofa-card-img" alt="Unlimited Cash Rewards" />
+          <div class="bofa-card-details">
+            <div class="bofa-card-title">Unlimited Cash Rewards</div>
+            <div class="bofa-card-desc">1.5% 无限返现 · 限时 Offer · 无年费</div>
+          </div>
+          <button class="bofa-card-action" type="button">申请 Pre →</button>
+        </div>
+
+        <div class="bofa-card-item" data-card-id="3">
+          <img src="cards/bofa-3.png" class="bofa-card-img" alt="BankAmericard" />
+          <div class="bofa-card-details">
+            <div class="bofa-card-title">BankAmericard® Credit Card</div>
+            <div class="bofa-card-desc">长达 18 个月 0% Intro APR · 无年费</div>
+          </div>
+          <button class="bofa-card-action" type="button">申请 Pre →</button>
+        </div>
+
+        <div class="bofa-card-item" data-card-id="4">
+          <img src="cards/bofa-4.png" class="bofa-card-img" alt="Travel Rewards" />
+          <div class="bofa-card-details">
+            <div class="bofa-card-title">Travel Rewards Credit Card</div>
+            <div class="bofa-card-desc">1.5x 旅行消费积分 · 无年费 · 0 FTF</div>
+          </div>
+          <button class="bofa-card-action" type="button">申请 Pre →</button>
+        </div>
+
+        <div class="bofa-card-item" data-card-id="5">
+          <img src="cards/bofa-5.png" class="bofa-card-img" alt="Premium Rewards" />
+          <div class="bofa-card-details">
+            <div class="bofa-card-title">Premium Rewards® Card</div>
+            <div class="bofa-card-desc">2x 旅行/餐饮 · $100 航空杂费报销</div>
+          </div>
+          <button class="bofa-card-action" type="button">申请 Pre →</button>
+        </div>
+
+        <div class="bofa-card-item" data-card-id="6">
+          <img src="cards/bofa-6.png" class="bofa-card-img" alt="Premium Rewards Elite" />
+          <div class="bofa-card-details">
+            <div class="bofa-card-title">Premium Rewards® Elite</div>
+            <div class="bofa-card-desc">高端商旅权益 · $300 报销 · 机场休息室</div>
+          </div>
+          <button class="bofa-card-action" type="button">申请 Pre →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alliant CU Secondary View -->
+    <div id="alliant-view" class="hidden">
+      <div class="view-header">
+        <button id="btn-back-alliant" class="btn-back" type="button">← 返回主界面</button>
+        <span class="view-header-title">Alliant CU 申请管理</span>
+      </div>
+      <div class="view-intro-tip">
+        在已登录的 Alliant 页面本地读取申请和拒绝原因，并直接取消申请。登录状态与数据不会离开浏览器。
+      </div>
+
+      <!-- Free Local Banner -->
+      <div class="alliant-quota-card">
+        <div class="quota-info-row" style="margin-bottom:2px;">
+          <span class="quota-label">✨ 纯本地免费运行 · 无限次使用</span>
+          <span class="badge badge-auth">无限制</span>
+        </div>
+        <div class="quota-subtext">
+          所有 GraphQL 查询与撤销均在您已登录的官网页面内直接完成，不经过任何第三方服务器。
+        </div>
+      </div>
+
+      <!-- Step 1: Login -->
+      <div class="alliant-step-card">
+        <div class="step-badge-row">
+          <span class="step-num">1</span>
+          <span class="step-title">跳转登录</span>
+        </div>
+        <p class="step-desc">前往 Alliant CU 官方申请门户登录您的个人账号。登录成功后返回插件执行下一步。</p>
+        <button id="btn-alliant-login" class="btn btn-primary btn-block" type="button">
+          🔗 跳转登录官网 (open.alliantcreditunion.com)
+        </button>
+      </div>
+
+      <!-- Step 2: Check Local Login -->
+      <div class="alliant-step-card">
+        <div class="step-badge-row">
+          <span class="step-num">2</span>
+          <span class="step-title">确认登录</span>
+          <span id="alliant-cookie-status" class="status-pill status-gray">未检测</span>
+        </div>
+        <p class="step-desc">检测当前浏览器是否已登录官网。登录状态只留在本地，不会上传。</p>
+        <button id="btn-alliant-upload-cookie" class="btn btn-secondary btn-block" type="button">
+          确认本地登录状态
+        </button>
+      </div>
+
+      <!-- Step 3: Analyze Refusal Reason -->
+      <div class="alliant-step-card">
+        <div class="step-badge-row">
+          <span class="step-num">3</span>
+          <span class="step-title">分析拒绝原因</span>
+        </div>
+        <p class="step-desc">在已登录的官网页面直接读取申请详情和风控标签。</p>
+        <button id="btn-alliant-analyze" class="btn btn-info btn-block" type="button">
+          🔍 分析拒绝原因
+        </button>
+
+        <!-- Analysis Results Container -->
+        <div id="alliant-result-box" class="alliant-result-box hidden">
+          <div class="result-header">
+            <span class="result-title">📋 申请分析详情</span>
+            <span id="alliant-status-badge" class="badge">未知</span>
+          </div>
+
+          <div class="result-field-row">
+            <span class="result-label">申请单 ID:</span>
+            <code id="alliant-app-id" class="result-code">-</code>
+          </div>
+
+          <div class="result-field-row">
+            <span class="result-label">申请产品:</span>
+            <span id="alliant-app-product" class="result-value">-</span>
+          </div>
+
+          <div class="result-field-row">
+            <span class="result-label">申请时间:</span>
+            <span id="alliant-app-time" class="result-value">-</span>
+          </div>
+
+          <div class="result-field-row">
+            <span class="result-label">取消状态:</span>
+            <span id="alliant-app-canceled" class="result-value">-</span>
+          </div>
+
+          <!-- Tags List -->
+          <div class="result-tags-section">
+            <div class="result-section-label">🚨 官方风控评估标签:</div>
+            <div id="alliant-tags-box" class="alliant-tags-container"></div>
+          </div>
+
+          <!-- Detailed Explanation Box -->
+          <div class="result-explanation-section">
+            <div class="result-section-label">💡 拒绝原因深度解析与建议:</div>
+            <div id="alliant-advice-box" class="alliant-explanation-text"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4: Cancel Application -->
+      <div class="alliant-step-card">
+        <div class="step-badge-row">
+          <span class="step-num">4</span>
+          <span class="step-title">取消申请</span>
+        </div>
+        <p class="step-desc">从当前登录页面直接取消申请。</p>
+        <button id="btn-alliant-cancel" class="btn btn-danger btn-block" type="button">
+          取消当前申请
+        </button>
+        <div id="alliant-cancel-status" class="alliant-cancel-status hidden"></div>
+      </div>
+    </div>
+
+    <!-- Capital One force-address view -->
+    <div id="c1-view" class="hidden">
+      <div class="view-header">
+        <button id="btn-back-c1" class="btn-back" type="button">← 返回主界面</button>
+        <span class="view-header-title">C1 信用卡强制地址</span>
+      </div>
+      <div class="view-intro-tip">
+        预审页会用 Google / USPS 校验改写地址。在这里保存 USPS 标准地址后，提交时由插件直接替换请求里的地址字段。
+      </div>
+
+      <div class="c1-form-card">
+        <div class="form-group">
+          <label for="c1-line1">街道行 Street <span class="required">*</span></label>
+          <input id="c1-line1" class="input" type="text" maxlength="40" placeholder="350 5th Ave" autocomplete="off" />
+        </div>
+        <div class="form-group">
+          <label for="c1-line2">公寓号 Apt / Suite</label>
+          <input id="c1-line2" class="input" type="text" maxlength="40" placeholder="Apt 4B 或 #12" autocomplete="off" />
+        </div>
+        <div class="form-group">
+          <label for="c1-city">城市 City <span class="required">*</span></label>
+          <input id="c1-city" class="input" type="text" maxlength="50" placeholder="New York" autocomplete="off" />
+        </div>
+        <div class="c1-row">
+          <div class="form-group">
+            <label for="c1-state">州 State <span class="required">*</span></label>
+            <input id="c1-state" class="input code-input" type="text" maxlength="2" placeholder="NY" autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label for="c1-zip">ZIP <span class="required">*</span></label>
+            <input id="c1-zip" class="input code-input" type="text" maxlength="5" inputmode="numeric" placeholder="10118" autocomplete="off" />
+          </div>
+        </div>
+        <label class="c1-check">
+          <input id="c1-same-mailing" type="checkbox" checked />
+          <span>邮寄地址与居住地址相同（未单独填写时一并替换）</span>
+        </label>
+        <div class="info-list c1-rules">
+          <div class="info-item">街道最多 40 字符，用 USPS 缩写；城市只保留字母和空格。</div>
+          <div class="info-item">公寓号不要句点、斜杠或逗号，写成 Apt 4B 或 #12。</div>
+          <div class="info-item">请在 5 分钟内完成操作，超时后辅助会自动关闭。</div>
+        </div>
+        <div class="c1-actions">
+          <button id="btn-c1-personal" class="btn btn-c1" type="button">个人卡预审</button>
+          <button id="btn-c1-business" class="btn btn-c1-biz" type="button">企业卡预审</button>
+        </div>
+        <div id="c1-saved-tip" class="c1-saved-tip hidden"></div>
+      </div>
+    </div>
+
+    <!-- Author & Community Links -->
+    <div class="links-card">
+      <div class="link-row">
+        <span class="link-label">作者 X</span>
+        <a href="https://x.com/silence_3650" target="_blank" rel="noopener noreferrer" class="ext-link">
+          https://x.com/silence_3650
+        </a>
+      </div>
+      <div class="link-row">
+        <span class="link-label">美卡交流群</span>
+        <a href="https://t.me/uscloudnra" target="_blank" rel="noopener noreferrer" class="ext-link">
+          https://t.me/uscloudnra
+        </a>
+      </div>
+      <div class="link-row">
+        <span class="link-label">美国租房合同生成器</span>
+        <a href="https://lease.nranote.com" target="_blank" rel="noopener noreferrer" class="ext-link">
+          https://lease.nranote.com
+        </a>
+      </div>
+      <div class="link-row">
+        <span class="link-label">GitHub 开源</span>
+        <a href="https://github.com/mstscmsn/itin_tools" target="_blank" rel="noopener noreferrer" class="ext-link">
+          mstscmsn/itin_tools
+        </a>
+      </div>
+      <div class="link-row">
+        <span class="link-label">开源与隐私说明</span>
+        <button id="btn-open-privacy" type="button" class="btn-link">
+          🔒 查看纯本地零上传承诺
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span>运行模式: <code>100% 纯本地 · 零上传</code></span>
+      <a href="https://t.me/uscloudnra" target="_blank" rel="noopener noreferrer" class="btn-icon footer-tg-link">
+        💬 加入 TG 群
+      </a>
+    </footer>
+  </div>
+
+  <!-- Telegram Community Recommendation Modal (Before Running Any Script) -->
+  <div id="tg-modal" class="privacy-modal hidden">
+    <div class="privacy-modal-card tg-modal-card">
+      <div class="privacy-modal-header tg-modal-header">
+        <div class="tg-header-title-wrap">
+          <span class="tg-badge-icon" aria-hidden="true">✈️</span>
+          <h3>推荐加入美卡交流 TG 群聊</h3>
+        </div>
+        <button id="btn-close-tg" type="button" class="privacy-close-btn" title="取消">✕</button>
+      </div>
+      <div class="privacy-modal-body tg-modal-body">
+        <div class="tg-target-pill">
+          即将运行：<strong id="tg-target-name">辅助脚本</strong>
+        </div>
+        <p class="tg-intro-text">
+          本工具已改为<strong>纯本地、纯免费开源版本</strong>，无任何授权限制。运行脚本前推荐加入美卡交流 Telegram 群聊，获取最新 ITIN 申卡攻略、银行风控动态与问题交流！
+        </p>
+        <div class="tg-group-card">
+          <div class="tg-group-badge">TG</div>
+          <div class="tg-group-meta">
+            <div class="tg-group-name">美卡交流群 (@uscloudnra)</div>
+            <div class="tg-group-url">https://t.me/uscloudnra</div>
+          </div>
+        </div>
+        <label class="tg-skip-row">
+          <input type="checkbox" id="tg-skip-checkbox" />
+          <span>下次运行脚本不再弹出此推荐</span>
+        </label>
+        <div class="tg-modal-actions">
+          <button id="btn-tg-join" class="btn tg-btn-join" type="button">
+            ✈️ 立即加入 TG 群聊 (@uscloudnra)
+          </button>
+          <button id="btn-tg-continue" class="btn tg-btn-continue" type="button">
+            ▶ 已了解 / 继续运行脚本
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Privacy Policy Modal -->
+  <div id="privacy-modal" class="privacy-modal hidden">
+    <div class="privacy-modal-card">
+      <div class="privacy-modal-header">
+        <h3>🔒 纯本地运行与隐私安全说明</h3>
+        <button id="btn-close-privacy" type="button" class="privacy-close-btn">✕</button>
+      </div>
+      <div class="privacy-modal-body">
+        <div class="privacy-section">
+          <div class="privacy-section-title">一、100% 纯本地运行 · 零后台通信</div>
+          <p>本插件为开源免费版，<strong>没有任何后台授权服务器</strong>，不会收集或上传任何数据：</p>
+          <ul>
+            <li><strong>无授权/无指纹采集</strong>：不采集邮箱、不生成浏览器指纹、无需授权码、不限制设备数与使用次数。</li>
+            <li><strong>最小权限原则</strong>：扩展仅申请目标银行/信用站点权限（<code>chase.com</code>、<code>bankofamerica.com</code>、<code>capitalone.com</code>、<code>credit.com</code>、<code>alliantcreditunion.com</code>），无外部 API 通信。</li>
+            <li><strong>本地配置存储</strong>：Capital One 强制地址与弹窗偏好仅保存在浏览器本地 <code>chrome.storage.local</code> 中。</li>
+          </ul>
+        </div>
+        <div class="privacy-section privacy-safe-box">
+          <div class="privacy-section-title">二、绝不收集、绝不上传的信息承诺</div>
+          <ul>
+            <li><strong>零表单数据窥探</strong>：本插件<strong>绝不读取、记录或外发</strong>您在银行/信用官网填写的任何敏感信息（包括姓名、ITIN/SSN、生日、地址、电话、收入、账号密码及 Cookie）。</li>
+            <li><strong>直连官方服务器</strong>：所有辅助钩子及 Alliant 拒件分析均在浏览器本地执行，您的一切请求 100% 直连官方服务器。</li>
+            <li><strong>明文开源可审计</strong>：插件代码完全未混淆、未加密，您可直接在安装目录审阅全部源码。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

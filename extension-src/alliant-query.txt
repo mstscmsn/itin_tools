@@ -1,0 +1,1155 @@
+query GetApplications($includeAccounts: Boolean! = false) {
+  applications {
+    ...ApplicationFragment
+    meta
+    accounts @include(if: $includeAccounts) {
+      ...AccountFragment
+      __typename
+    }
+    __typename
+  }
+  user {
+    id
+    firstName
+    lastName
+    middleName
+    suffix
+    emailPrimary
+    __typename
+  }
+  authData {
+    ...AuthDataFragment
+    __typename
+  }
+}
+
+fragment ApplicationFieldsFragment on ApplicationFields {
+  applicantId
+  regionId
+  doingBusinessAs
+  productId
+  productType
+  accountId
+  accountVariant
+  accountName
+  accountNumber
+  accountPurpose
+  accounts {
+    id
+    accountName
+    accountVariant
+    doingBusinessAs
+    purposeOfLoan
+    newAccountRelationshipData {
+      personId
+      role
+      organizationId
+      isPrimaryEntity
+      relationshipToAccount
+      __typename
+    }
+    productId
+    productType
+    promoCode
+    referralCode
+    referenceId
+    regionId
+    skipFunding
+    isPrimaryShareAccount
+    preOfferLoanAmountCents
+    preOfferLoanRate
+    preOfferLoanTermMonths
+    acceptedLoanAmountCents
+    acceptedLoanTermMonths
+    acceptedLoanRate
+    autopayDiscountRate
+    offerLoanRate
+    desiredLoanAmountCents
+    desiredMonthlyPaymentCents
+    desiredLoanTermMonths
+    hasSeenSelfServeAddOns
+    purposeOfLoan
+    purposeOfLoanList
+    purposeOfLoanOther
+    offerLoanTermMonths
+    offerLoanAmountCents
+    originatingBranchCode
+    planId
+    requestedLoanOfficer
+    __typename
+  }
+  planId
+  accountPurposeOtherDescription
+  collateralIds
+  createdAccountId
+  createdAccountNumber
+  createdAccounts {
+    referenceId
+    id
+    number
+    __typename
+  }
+  createdPrimaryShares {
+    primaryShareAccountId
+    primaryShareAccountNumber
+    primaryShareFundingTransactionId
+    personId
+    organizationId
+    __typename
+  }
+  primaryShareData
+  hasDomesticAchCredit
+  hasDomesticAchDebit
+  hasInternationalAchCredit
+  hasInternationalAchDebit
+  hasCashActivity
+  hasDomesticWireTransfersCredit
+  hasDomesticWireTransfersDebit
+  hasInternationalWireTransfersCredit
+  hasInternationalWireTransfersDebit
+  isControlProngAuthorizedSigner
+  ioltaExternalCoreId
+  expectedDomesticMonthlyDepositAchVolume
+  expectedDomesticMonthlyWithdrawalAchVolume
+  expectedInternationalMonthlyDepositAchVolume
+  expectedInternationalMonthlyDepositAchCountriesList
+  expectedInternationalMonthlyWithdrawalAchCountriesList
+  expectedInternationalMonthlyWithdrawalAchVolume
+  cashDepositVolume
+  cashWithdrawalVolume
+  expectedDomesticMonthlyDepositWireTransferVolume
+  expectedDomesticMonthlyWithdrawalWireTransfers
+  expectedInternationalMonthlyDepositWireTransferVolume
+  expectedInternationalMonthlyDepositWireTransfersCountriesList
+  expectedInternationalMonthlyWithdrawalWireTransferVolume
+  expectedInternationalMonthlyWithdrawalWireTransfersCountriesList
+  addressPrimaryCity
+  addressPrimaryLine1
+  addressPrimaryLine2
+  addressPrimaryState
+  addressPrimaryZip
+  counterOfferStatus
+  counterOfferProductId
+  childApplicationId
+  isProxyQuestion
+  purposeOfAccountBusiness
+  purposesOfAccountBusiness
+  purposeOfAccountOtherDescriptionBusiness
+  isDesignatingPowerOfAttorneyBusiness
+  expectedFrequencyOfDepositsBusiness
+  expectedDepositMethodListBusiness
+  expectedDepositMethodOtherDescriptionBusiness
+  expectedRemoteDepositVolumeBusiness
+  expectedTotalDepositVolumeBusiness
+  doesExpectCashActivityBusiness
+  doesExpectCashDepositsBusiness
+  expectedCashDepositVolumeBusiness
+  doesExpectCashWithdrawalsBusiness
+  expectedCashWithdrawalVolumeBusiness
+  doesExpectCheckActivityBusiness
+  doesExpectCheckDepositsBusiness
+  expectedCheckDepositVolumeBusiness
+  doesExpectCheckWithdrawalsBusiness
+  expectedCheckWithdrawalVolumeBusiness
+  doesExpectInternalTransferActivityBusiness
+  doesExpectInternalTransferDepositsBusiness
+  expectedInternalTransferDepositVolumeBusiness
+  internalDepositsAccountDetailsDescriptionBusiness
+  internalDepositsPurposeDescriptionBusiness
+  doesExpectInternalTransferWithdrawalsBusiness
+  expectedInternalTransferWithdrawalVolumeBusiness
+  internalWithdrawalsAccountDetailsDescriptionBusiness
+  internalWithdrawalsPurposeDescriptionBusiness
+  doesExpectAchOriginationActivityBusiness
+  doesExpectAchOriginationDepositsBusiness
+  expectedAchOriginationDepositVolumeBusiness
+  doesExpectAchOriginationWithdrawalsBusiness
+  expectedAchOriginationWithdrawalVolumeBusiness
+  doesExpectAchTransferActivityBusiness
+  doesExpectDomesticAchDepositsBusiness
+  expectedDomesticAchDepositVolumeBusiness
+  doesExpectDomesticAchWithdrawalsBusiness
+  expectedDomesticAchWithdrawalVolumeBusiness
+  doesExpectForeignAchDepositsBusiness
+  expectedForeignAchDepositVolumeBusiness
+  expectedNumberOfForeignAchDepositsBusiness
+  expectedForeignDepositAchCountriesListBusiness
+  doesExpectForeignAchWithdrawalsBusiness
+  expectedForeignAchWithdrawalVolumeBusiness
+  expectedNumberOfForeignAchWithdrawalsBusiness
+  expectedForeignWithdrawalAchCountriesListBusiness
+  doesExpectWireTransferActivityBusiness
+  doesExpectDomesticWireDepositsBusiness
+  expectedMonthlyDomesticWireDepositVolumeBusiness
+  domesticWireDepositsPurposeDescriptionBusiness
+  doesExpectDomesticWireWithdrawalsBusiness
+  expectedDomesticWireWithdrawalVolumeBusiness
+  domesticWireWithdrawalsPurposeDescriptionBusiness
+  doesExpectForeignWireDepositsBusiness
+  expectedForeignWireDepositVolumeBusiness
+  expectedNumberOfForeignWireTransferDepositsBusiness
+  expectedForeignDepositWireTransfersCountriesListBusiness
+  foreignWireTransferDepositsPurposeDescriptionBusiness
+  doesExpectForeignWireWithdrawalsBusiness
+  expectedForeignWireWithdrawalVolumeBusiness
+  expectedNumberOfForeignWireTransferWithdrawalsBusiness
+  expectedForeignWithdrawalWireTransfersCountriesListBusiness
+  foreignWireTransferWithdrawalsPurposeDescriptionBusiness
+  hasRemoteCaptureBusiness
+  monthlyRemoteDepositVolumeBusiness
+  expectedNumberOfAchDepositsBusiness
+  expectedNumberOfAchWithdrawalsBusiness
+  expectedNumberOfCheckDepositsBusiness
+  expectedNumberOfDomesticWireDepositsBusiness
+  expectedNumberOfDomesticWireWithdrawalsBusiness
+  membershipInfo
+  newAccountEntities {
+    personId
+    referenceId
+    firstName
+    lastName
+    emailPrimary
+    relationshipToAccount
+    __typename
+  }
+  jointOwnerInviterPersonId
+  declinedJointOwnerAppPersonId
+  hasPositivePayService
+  hasAccountWithin12Months
+  hasAccountClosedWithin12Months
+  hasBeenConvictedCheckUse
+  nameOfFinancialInstitution
+  reasonForAccountClosed
+  hasRemovedSecurityFreeze
+  hasCollateralPreSubmission
+  desiredLoanAmountCents
+  desiredMonthlyPaymentCents
+  desiredLoanTermMonths
+  purposeOfLoan
+  purposeOfLoanList
+  offerLoanTermMonths
+  offerLoanRate
+  offerLoanAmountCents
+  acceptedLoanAmountCents
+  acceptedLoanTermMonths
+  acceptedLoanRate
+  autopayDiscountRate
+  disbursalMethod {
+    type
+    accountId
+    checkRecipientName
+    __typename
+  }
+  preOfferLoanAmountCents
+  preOfferLoanRate
+  preOfferLoanTermMonths
+  currentLender
+  currentMonthlyPayment
+  initialLoanAmount
+  tradingInAVehicle
+  existingLoanOnVehicleBeingTradedIn
+  tradeInLoanAmount
+  tradeInPaymentAmount
+  promoCode
+  referralCode
+  sourceOfFunds
+  purposeOfAccountConsumer
+  purposeOfAccountOtherDescriptionConsumer
+  isDesignatingPowerOfAttorneyConsumer
+  expectedFrequencyOfDepositsConsumer
+  expectedDepositMethodListConsumer
+  expectedDepositMethodOtherDescriptionConsumer
+  expectedRemoteDepositVolumeConsumer
+  doesExpectCashActivityConsumer
+  doesExpectCashDepositsConsumer
+  expectedCashDepositVolumeConsumer
+  doesExpectCashWithdrawalsConsumer
+  expectedCashWithdrawalVolumeConsumer
+  expectedTotalDepositVolumeConsumer
+  doesExpectCheckActivityConsumer
+  doesExpectCheckDepositsConsumer
+  expectedCheckDepositVolumeConsumer
+  doesExpectCheckWithdrawalsConsumer
+  expectedCheckWithdrawalVolumeConsumer
+  doesExpectCryptocurrencyExchangeTransactionsConsumer
+  doesExpectInternalTransferActivityConsumer
+  doesExpectInternalTransferDepositsConsumer
+  expectedInternalTransferDepositVolumeConsumer
+  internalDepositsAccountDetailsDescriptionConsumer
+  internalDepositsPurposeDescriptionConsumer
+  doesExpectInternalTransferWithdrawalsConsumer
+  expectedInternalTransferWithdrawalVolumeConsumer
+  internalWithdrawalsAccountDetailsDescriptionConsumer
+  internalWithdrawalsPurposeDescriptionConsumer
+  doesExpectAchOriginationActivityConsumer
+  doesExpectAchOriginationDepositsConsumer
+  expectedAchOriginationDepositVolumeConsumer
+  doesExpectAchOriginationWithdrawalsConsumer
+  expectedAchOriginationWithdrawalVolumeConsumer
+  doesExpectAchTransferActivityConsumer
+  doesExpectDomesticAchDepositsConsumer
+  expectedDomesticAchDepositVolumeConsumer
+  doesExpectDomesticAchWithdrawalsConsumer
+  expectedDomesticAchWithdrawalVolumeConsumer
+  doesExpectForeignAchDepositsConsumer
+  expectedForeignAchDepositVolumeConsumer
+  expectedNumberOfForeignAchDepositsConsumer
+  expectedForeignDepositAchCountriesListConsumer
+  doesExpectForeignAchWithdrawalsConsumer
+  expectedForeignAchWithdrawalVolumeConsumer
+  expectedNumberOfForeignAchWithdrawalsConsumer
+  expectedForeignWithdrawalAchCountriesListConsumer
+  doesExpectWireTransferActivityConsumer
+  doesExpectDomesticWireDepositsConsumer
+  expectedMonthlyDomesticWireDepositVolumeConsumer
+  domesticWireDepositsPurposeDescriptionConsumer
+  doesExpectDomesticWireWithdrawalsConsumer
+  expectedDomesticWireWithdrawalVolumeConsumer
+  domesticWireWithdrawalsPurposeDescriptionConsumer
+  doesExpectForeignWireDepositsConsumer
+  expectedForeignWireDepositVolumeConsumer
+  expectedNumberOfForeignWireTransferDepositsConsumer
+  expectedForeignDepositWireTransfersCountriesListConsumer
+  foreignWireTransferDepositsPurposeDescriptionConsumer
+  doesExpectForeignWireWithdrawalsConsumer
+  expectedForeignWireWithdrawalVolumeConsumer
+  expectedNumberOfForeignWireTransferWithdrawalsConsumer
+  expectedForeignWithdrawalWireTransfersCountriesListConsumer
+  foreignWireTransferWithdrawalsPurposeDescriptionConsumer
+  hasRemoteCaptureConsumer
+  monthlyRemoteDepositVolumeConsumer
+  expectedDomesticDailyTransactionVolumeConsumer
+  expectedDomesticMonthlyTransactionVolumeConsumer
+  doesExpectInternationalTransactions
+  expectedForeignDailyTransactionVolumeConsumer
+  expectedForeignMonthlyTransactionVolumeConsumer
+  expectedNumberOfAchDepositsConsumer
+  expectedNumberOfAchWithdrawalsConsumer
+  expectedNumberOfCheckDepositsConsumer
+  expectedNumberOfDomesticWireDepositsConsumer
+  expectedNumberOfDomesticWireWithdrawalsConsumer
+  needsCDD
+  locationsOutsideTerritory
+  locationsInsideTerritory
+  otherLocation
+  controlPersonForeignLocation
+  countriesPersonForeignLocation
+  wealthSource
+  futureFunds
+  foreignFunds
+  fundsForeignLocation
+  activityAccountPurpose
+  activityComment
+  hempIndustryEmployment
+  marijuanaRelatedBusinessInvolvement
+  originatingBranchCode
+  interestEarnedPaymentFrequency
+  interestEarnedPayment
+  interestEarnedInternalAccountNumber
+  interestEarnedAccountNumber
+  interestEarnedRoutingNumber
+  interestEarnedAccountType
+  personId
+  ownership
+  newAccountRelationshipData {
+    personId
+    organizationId
+    role
+    isPrimaryEntity
+    relationshipToAccount
+    __typename
+  }
+  skippedFields
+  personIdMapping {
+    syncedPersonId
+    applicationPersonId
+    __typename
+  }
+  organizationIdMapping {
+    syncedOrganizationId
+    applicationOrganizationId
+    __typename
+  }
+  notifications
+  cdRenewal
+  supplementalNote
+  requestedLoanOfficer
+  isRenegotiatedCertificateOfDeposit
+  __typename
+}
+
+fragment ApplicationFragment on Application {
+  id
+  createdAt
+  documentVerificationCompletions {
+    evaluationId
+    completions
+    __typename
+  }
+  type
+  reviewStatus
+  preOfferStatus
+  offerStatus
+  closingStatus
+  executionStatus
+  executionSteps
+  expireAt
+  originatingExperience
+  requiredActions {
+    type
+    data
+    dataObject
+    entityId
+    entityType
+    referenceId
+    applicantNote
+    rejectionNote
+    documentRequestId
+    __typename
+  }
+  documentRequests {
+    id
+    name
+    entityId
+    entityType
+    requirementType
+    instructions
+    status
+    __typename
+  }
+  requirements
+  closingActions {
+    type
+    entityId
+    entityType
+    data
+    applicantNote
+    rejectionNote
+    documentRequestId
+    __typename
+  }
+  preOfferActions {
+    type
+    entityId
+    entityType
+    data
+    applicantNote
+    rejectionNote
+    documentRequestId
+    __typename
+  }
+  offerActions {
+    type
+    entityId
+    entityType
+    data
+    applicantNote
+    rejectionNote
+    documentRequestId
+    __typename
+  }
+  personKycSnapshot {
+    personId
+    tags
+    __typename
+  }
+  consumerUnderwritingSnapshot {
+    personId
+    tags
+    __typename
+  }
+  organizationKycSnapshot {
+    organizationId
+    tags
+    __typename
+  }
+  feeSnapshot {
+    ...FeeSnapshotFragment
+    __typename
+  }
+  addOnSnapshot {
+    ...AddOnSnapshotFragment
+    __typename
+  }
+  personKycEvaluationTags
+  organizationKycEvaluationTags
+  underwritingTags
+  disbursalMethods {
+    ...DisbursalMethodFragment
+    __typename
+  }
+  fields {
+    ...ApplicationFieldsFragment
+    __typename
+  }
+  updatedAt
+  canceledAt
+  organization {
+    ...OrganizationFragment
+    __typename
+  }
+  organizations {
+    ...OrganizationFragment
+    __typename
+  }
+  persons {
+    ...PersonFragment
+    __typename
+  }
+  collateral {
+    id
+    rawFields
+    accountNumberLastFour
+    __typename
+  }
+  products {
+    ...ApplicationProductFragment
+    __typename
+  }
+  fundingTransactions {
+    ...FundingTransactionFragment
+    __typename
+  }
+  fundingTransaction {
+    ...FundingTransactionFragment
+    __typename
+  }
+  autopayFundingSource {
+    ...FundingSourceFragment
+    __typename
+  }
+  failedEligibilityCheck
+  isAwaitingOtherSigners
+  isCurrentUserNonSignerApplicant
+  isCurrentUserPrimarySigner
+  isAwaitingCurrentUserSignature
+  isAwaitingCurrentUserClosingSignature
+  isAwaitingOtherSignersClosingSignature
+  isMultiApplicantsCDASO
+  taxReportingEntities {
+    accountReferenceId
+    entityId
+    entityType
+    name
+    taxIdLastFour
+    isEIN
+    __typename
+  }
+  userCanEditApplication
+  userIsInvitedJointOwner
+  requiredSigners
+  primarySigner
+  loanHasAddOns
+  autopayRequirement
+  missingPreOfferSignatures {
+    type
+    entityId
+    entityType
+    __typename
+  }
+  missingClosingSignatures {
+    type
+    entityId
+    entityType
+    __typename
+  }
+  missingSignatures {
+    type
+    data
+    entityId
+    entityType
+    __typename
+  }
+  missingAttestations {
+    type
+    data
+    entityId
+    entityType
+    __typename
+  }
+  rateProperties {
+    accountReferenceId
+    interestRate
+    apy
+    __typename
+  }
+  rawFields
+  meta
+  __typename
+}
+
+fragment OrganizationFragment on Organization {
+  id
+  externalCoreId
+  externalCoreMembershipId
+  coreSyncedFields
+  rawFields
+  missingFields
+  legalName
+  allowlistCategory
+  rawFields
+  doingBusinessAsAliases {
+    id
+    name
+    __typename
+  }
+  type
+  taxIdLastFour
+  taxIdType
+  codatCompanyId
+  addressPrimaryLine1
+  addressPrimaryLine2
+  addressPrimaryCity
+  addressPrimaryState
+  addressPrimaryZip
+  addressPrimaryCountry
+  addressMailingLine1
+  addressMailingLine2
+  addressMailingCity
+  addressMailingState
+  addressMailingZip
+  addressMailingCountry
+  creditUnionMembershipSegCode
+  creditUnionEligibilityCriteria
+  creditUnionOrganizationRegion
+  creditUnionMembershipEligibilityReason
+  membershipList {
+    externalCoreMembershipId
+    membershipType
+    __typename
+  }
+  persons {
+    ...PersonFragment
+    type
+    organizationRole
+    __typename
+  }
+  __typename
+}
+
+fragment PersonFragment on Person {
+  id
+  organizationRelationshipId
+  externalCoreId
+  externalCoreMembershipId
+  coreSyncedFields
+  firstName
+  middleName
+  lastName
+  suffix
+  emailPrimary
+  emails {
+    address
+    type
+    coreSynced
+    verified
+    __typename
+  }
+  notificationEmail
+  membershipList {
+    externalCoreMembershipId
+    membershipType
+    __typename
+  }
+  creditUnionMembershipSegCode
+  creditUnionEligibilityCriteria
+  creditUnionResidentialRegion
+  meetsMinimumWorkRequirements
+  truStageHealthQuestion1
+  truStageHealthQuestion2
+  plans {
+    id
+    personId
+    externalCoreId
+    fields
+    __typename
+  }
+  rawFields
+  taxIdLastFour
+  taxIdType
+  type
+  title
+  dateOfBirth
+  usResidencyStatus
+  protectedPartyTypes
+  emailSecondary
+  phoneMobile
+  isControlProng
+  isOwnershipProng
+  isSoleProprietor
+  isTrustee
+  isGrantor
+  isPiiHidden
+  ownershipPercentage
+  addressPrimaryCity
+  addressPrimaryCountry
+  addressPrimaryLine1
+  addressPrimaryLine2
+  addressPrimaryState
+  addressPrimaryZip
+  addressMailingCity
+  addressMailingCountry
+  addressMailingLine1
+  addressMailingLine2
+  addressMailingState
+  addressMailingZip
+  hasTaxId
+  fields {
+    coreValue
+    __typename
+  }
+  isMinor
+  hasOrganizationRelationship
+  applicationRole
+  cards {
+    ...CardOnAccountFragment
+    __typename
+  }
+  eligibleCardServices {
+    ...EligibleServiceOnAccountFragment
+    __typename
+  }
+  existingSignatures {
+    id
+    applicationId
+    clientId
+    personId
+    createdAt
+    agreementId
+    name
+    clientName
+    route
+    __typename
+  }
+  __typename
+}
+
+fragment CardOnAccountFragment on AccountCard {
+  id
+  serviceId
+  last4
+  updatedAt
+  relatedAccountIds
+  __typename
+}
+
+fragment EligibleServiceOnAccountFragment on AccountEligibleCardService {
+  id
+  type
+  name
+  description
+  promoted
+  linkableCards {
+    id
+    serviceId
+    last4
+    updatedAt
+    __typename
+  }
+  __typename
+}
+
+fragment FundingTransactionFragment on FundingTransaction {
+  id
+  accountId
+  fundingAmount
+  executionStatus
+  kycEvaluationOutcome
+  kycEvaluationId
+  type
+  isPrimaryShareFundingTransaction
+  productId
+  primaryShareOwnerPersonId
+  primaryShareOwnerOrganizationId
+  primaryShareCreationInstructionName
+  meta {
+    retirementAccountFundingMethod
+    accountReferenceId
+    boxDiscountCode
+    boxDiscountAmount
+    safeDepositBoxCustomRenewalDate
+    __typename
+  }
+  fundingSource {
+    ...FundingSourceFragment
+    __typename
+  }
+  __typename
+}
+
+fragment FundingSourceFragment on FundingSource {
+  id
+  type
+  createdAt
+  lastFour
+  ... on CardFundingSource {
+    nameOnCard
+    cardType
+    __typename
+  }
+  ... on ManualAccountFundingSource {
+    accountType
+    routingNumber
+    isDisallowedInternalRoutingNumber
+    isDisallowedExternalRoutingNumber
+    holderCategory
+    __typename
+  }
+  ... on InstantAccountVerificationFundingSource {
+    accountType
+    routingNumber
+    balance
+    name
+    logo
+    institutionName
+    mask
+    institutionId
+    isDisallowedInternalRoutingNumber
+    isDisallowedExternalRoutingNumber
+    holderCategory
+    __typename
+  }
+  ... on CustomerInternalAccountFundingSource {
+    productId
+    name
+    currentBalanceUnits
+    availableBalanceUnits
+    productType
+    customerType
+    currentBalance
+    availableBalance
+    logo
+    maskedAccountNumber
+    __typename
+  }
+  __typename
+}
+
+fragment FundingMethodFragment on FundingMethod {
+  id
+  enabled
+  maxTransactionAmountInCents
+  minTransactionAmountInCents
+  __typename
+}
+
+fragment DisbursalMethodFragment on InternalTransferDisbursalMethod {
+  id
+  lastFour
+  productType
+  productId
+  accountVariant
+  __typename
+}
+
+fragment FeeSnapshotFragment on FeeSnapshot {
+  itemizedFees {
+    id
+    label
+    amountCents
+    description
+    type
+    __typename
+  }
+  totalFeesAmountCents
+  totalFeesAndAddOnsAmountCents
+  disbursalAmountCents
+  totalAmountFinanced
+  accountReferenceId
+  __typename
+}
+
+fragment AddOnSnapshotFragment on AddOnSnapshotEntry {
+  id
+  loanReferenceId
+  selectionData {
+    addOnKey
+    type
+    planName
+    planId
+    planType
+    personIds
+    costs {
+      totalBaseCostInCents
+      totalCostInCentsAfterInterest
+      estimatedMonthlyPaymentInCents
+      costType
+      __typename
+    }
+    carletonPlanId
+    collateralId
+    __typename
+  }
+  __typename
+}
+
+fragment ApplicationProductFragment on ApplicationProduct {
+  id
+  name
+  type
+  description
+  customerType
+  crossSellProductId
+  counterOfferProductId
+  allowSkipFunding
+  accountVariants
+  optionalServiceIds
+  allowJointOwnership
+  daysToMaturity
+  cumulativeTimeToMaturity {
+    years
+    months
+    weeks
+    days
+    __typename
+  }
+  disclosures {
+    copy
+    key
+    __typename
+  }
+  fundingMethods {
+    instantAccountVerification {
+      ...FundingMethodFragment
+      __typename
+    }
+    manualBankAccount {
+      ...FundingMethodFragment
+      __typename
+    }
+    card {
+      ...FundingMethodFragment
+      __typename
+    }
+    manual {
+      ...FundingMethodFragment
+      __typename
+    }
+    internalTransfer {
+      ...FundingMethodFragment
+      __typename
+    }
+    __typename
+  }
+  regions {
+    id
+    name
+    clientId
+    locations {
+      id
+      regionId
+      type
+      value
+      __typename
+    }
+    products {
+      id
+      productId
+      regionId
+      __typename
+    }
+    __typename
+  }
+  accountVariantName
+  newAccountRelationshipData {
+    personId
+    role
+    organizationId
+    isPrimaryEntity
+    __typename
+  }
+  maxSecondaryOwners
+  overrideSecondaryOwnerRelationshipType
+  disableJointOwners {
+    selfServe
+    console
+    __typename
+  }
+  accrualBasis
+  addOns
+  addOnsDisclosures
+  allowPreApproval
+  closingAgreements
+  closingAttestations
+  preOfferAgreements
+  offerUnderwritingAgreements
+  collateral
+  customPaymentDate
+  externalClosing
+  fees
+  firstPaymentDateStrategy
+  loanOfferExpirationInDays
+  loanEstimateExpirationInDays
+  loanRateType
+  loanType
+  lockOfferLoanAmount
+  disbursalProduct {
+    productId
+    accountVariant
+    __typename
+  }
+  disqualifyingProductIds
+  isTridLoan
+  onboardingSurvey {
+    title
+    body
+    url
+    __typename
+  }
+  __typename
+}
+
+fragment AuthDataFragment on AuthDataResponse {
+  userId
+  applicationId
+  organizationId
+  productId
+  customerCategory
+  productType
+  __typename
+}
+
+fragment ProductOnAccountFragment on AccountProduct {
+  id
+  name
+  type
+  description
+  crossSellProductId
+  counterOfferProductId
+  allowJointOwnership
+  accountVariants
+  overrideSecondaryOwnerRelationshipType
+  __typename
+}
+
+fragment PersonOnAccountFragment on PersonOnAccount {
+  status
+  personId
+  firstName
+  middleName
+  lastName
+  suffix
+  emailPrimary
+  relationshipType
+  isPrimaryEntity
+  updatedAt
+  isMinor
+  cards {
+    ...CardOnAccountFragment
+    __typename
+  }
+  eligibleCardServices {
+    ...EligibleServiceOnAccountFragment
+    __typename
+  }
+  relationshipPersonAccountId
+  externalCoreMembershipId
+  relationshipDisplayText
+  membershipList {
+    externalCoreMembershipId
+    membershipType
+    __typename
+  }
+  addressPrimaryLine1
+  addressPrimaryLine2
+  addressPrimaryCity
+  addressPrimaryState
+  addressPrimaryZip
+  addressPrimaryCountry
+  addressMailingLine1
+  addressMailingLine2
+  addressMailingCity
+  addressMailingState
+  addressMailingZip
+  addressMailingCountry
+  applicationId
+  title
+  __typename
+}
+
+fragment OrganizationOnAccountFragment on OrganizationOnAccount {
+  status
+  organizationId
+  legalName
+  relationshipType
+  relationshipDisplayText
+  isPrimaryEntity
+  updatedAt
+  relationshipOrganizationAccountId
+  relationshipDisplayText
+  __typename
+}
+
+fragment AccountFragment on Account {
+  id
+  name
+  status
+  number
+  routingNumber
+  productId
+  coreSnapshot {
+    majorCode
+    minorCode
+    coreInterestRateId
+    __typename
+  }
+  applicationId
+  currentBalanceUnits
+  availableBalanceUnits
+  currencyCode
+  isOverdraftProtectionEnabled
+  openDate
+  maturityDate
+  interestRate
+  interestRateSource
+  apy
+  apySource
+  createdAt
+  userIsExistingAccountOwner
+  outstandingLoanBalance
+  fields {
+    externalCoreMembershipId
+    accountVariant
+    customerType
+    addressPrimaryCity
+    addressPrimaryLine1
+    addressPrimaryLine2
+    addressPrimaryState
+    addressPrimaryZip
+    addressPrimaryCountry
+    addressMailingCity
+    addressMailingLine1
+    addressMailingLine2
+    addressMailingState
+    addressMailingZip
+    addressMailingCountry
+    productId
+    accountName
+    accountDisplayName
+    accountDisplayNumber
+    interestEarnedPayment
+    interestEarnedPaymentFrequency
+    __typename
+  }
+  persons {
+    ...PersonOnAccountFragment
+    __typename
+  }
+  personsOnOtherConsumerAccounts {
+    ...PersonOnAccountFragment
+    __typename
+  }
+  organizations {
+    ...OrganizationOnAccountFragment
+    __typename
+  }
+  product {
+    ...ProductOnAccountFragment
+    __typename
+  }
+  fundingTransactions {
+    ...FundingTransactionFragment
+    __typename
+  }
+  __typename
+}

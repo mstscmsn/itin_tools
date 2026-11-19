@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "ITIN tools",
+  "version": "2.1.0",
+  "description": "纯本地开源免费版 ITIN 美卡申请辅助工具：茶色 网银/信用卡 Pre、BOA Pre、Credit.com 注册、Capital One 强制地址、Alliant 拒件本地分析与取消，零联网授权、零数据上传。",
+  "permissions": [
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
+    "storage",
+    "tabs",
+    "browsingData",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://*.chase.com/*",
+    "*://*.bankofamerica.com/*",
+    "*://*.capitalone.com/*",
+    "*://*.credit.com/*",
+    "*://*.alliantcreditunion.com/*",
+    "https://open.alliantcreditunion.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "ITIN tools v2.1.0",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://secure.chase.com/web/oao/application/retail*",
+        "https://secure.chase.com/web/oao/application/card*"
+      ],
+      "js": [
+        "content-chase-loader.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}
