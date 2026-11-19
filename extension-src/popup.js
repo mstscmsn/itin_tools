@@ -4,6 +4,7 @@ import {
 } from "./alliant-local.js";
 
 const TG_GROUP_URL = "https://t.me/uscloudnra";
+const TG_VIP_BOT_URL = "https://t.me/uscloudvipbot";
 
 // DOM Elements
 const launchView = document.getElementById("launch-view");
@@ -51,6 +52,7 @@ const tgModal = document.getElementById("tg-modal");
 const tgTargetName = document.getElementById("tg-target-name");
 const tgSkipCheckbox = document.getElementById("tg-skip-checkbox");
 const btnCloseTg = document.getElementById("btn-close-tg");
+const btnTgVip = document.getElementById("btn-tg-vip");
 const btnTgJoin = document.getElementById("btn-tg-join");
 const btnTgContinue = document.getElementById("btn-tg-continue");
 
@@ -120,15 +122,25 @@ if (tgModal) {
   });
 }
 
+async function openExternalAndCloseModal(url) {
+  await saveSkipPreferenceIfChecked();
+  closeTgModal();
+  if (chrome?.tabs?.create) {
+    await chrome.tabs.create({ url, active: true });
+  } else {
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
+}
+
+if (btnTgVip) {
+  btnTgVip.addEventListener("click", () => {
+    openExternalAndCloseModal(TG_VIP_BOT_URL);
+  });
+}
+
 if (btnTgJoin) {
-  btnTgJoin.addEventListener("click", async () => {
-    await saveSkipPreferenceIfChecked();
-    closeTgModal();
-    if (chrome?.tabs?.create) {
-      await chrome.tabs.create({ url: TG_GROUP_URL, active: true });
-    } else {
-      window.open(TG_GROUP_URL, "_blank", "noopener,noreferrer");
-    }
+  btnTgJoin.addEventListener("click", () => {
+    openExternalAndCloseModal(TG_GROUP_URL);
   });
 }
 

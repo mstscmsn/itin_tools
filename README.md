@@ -1,10 +1,11 @@
-# ITIN tools (v2.1.0 · 纯本地开源免费版)
+# ITIN tools (v2.1.1 · 纯本地开源免费版)
 
 **ITIN tools** 是一款纯本地运行、永久免费开源的 Chrome / Edge 浏览器辅助扩展，专为仅有 **ITIN**（个人纳税人识别号）的美卡玩家打造。
 
 - **开源仓库**：[https://github.com/mstscmsn/itin_tools](https://github.com/mstscmsn/itin_tools)
 - **官方网站**：[https://itin.nranote.com](https://itin.nranote.com)
-- **美卡交流 Telegram 群**：[https://t.me/uscloudnra](https://t.me/uscloudnra)
+- **美卡交流 Telegram 群（免费）**：[https://t.me/uscloudnra](https://t.me/uscloudnra) (`@uscloudnra`)
+- **美卡云居民 VIP 群（20 USD / 年）**：添加机器人 **[@uscloudvipbot](https://t.me/uscloudvipbot)** 自助加群，分享更多美卡实战经验、高阶骚操作与风控技巧
 
 自 `v2.1.0` 起，本工具已彻底改为**纯本地、纯免费开源版本**：
 - **零服务器通信**：已移除全部远程授权校验、设备指纹采集、付费及云端额度接口。
@@ -71,7 +72,8 @@ node pack-extension.js
 
 ## 社区与交流
 
-- **美卡交流 Telegram 群**：[https://t.me/uscloudnra](https://t.me/uscloudnra)
+- **美卡交流 Telegram 群（免费）**：[https://t.me/uscloudnra](https://t.me/uscloudnra) (`@uscloudnra`) — 开源插件日常讨论与基础答疑
+- **美卡云居民 VIP 群（20 USD / 年）**：添加 Telegram 机器人 **[@uscloudvipbot](https://t.me/uscloudvipbot)** 自助加群 — 分享更多美卡实战经验、独家骚操作、下卡路子与风控应对技巧
 - **作者 X**：[https://x.com/silence_3650](https://x.com/silence_3650)
 - **美国租房合同生成器**：[https://lease.nranote.com](https://lease.nranote.com)
 

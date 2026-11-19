@@ -13,7 +13,7 @@
       <div class="brand">
         <div class="brand-logo">IT</div>
         <div>
-          <h1 class="brand-title">ITIN tools <span id="ext-version" class="version-pill">v2.1.0</span></h1>
+          <h1 class="brand-title">ITIN tools <span id="ext-version" class="version-pill">v2.1.1</span></h1>
           <p class="brand-subtitle">纯本地 · 开源免费美卡 ITIN 辅助工具</p>
         </div>
       </div>
@@ -69,6 +69,14 @@
       <p class="action-hint">
         点击对应按钮将自动配置本地规则并打开目标页面
       </p>
+
+      <a href="https://t.me/uscloudvipbot" target="_blank" rel="noopener noreferrer" class="vip-promo-banner">
+        <div class="vip-promo-top">
+          <span class="vip-promo-title">👑 美卡云居民 VIP 群</span>
+          <span class="vip-promo-price">20 USD / 年</span>
+        </div>
+        <div class="vip-promo-desc">分享更多美卡实战经验、骚操作等 · 添加机器人 @uscloudvipbot 立即入群 →</div>
+      </a>
     </div>
 
     <!-- BOA Secondary View (Card Selection) -->
@@ -309,9 +317,15 @@
         </a>
       </div>
       <div class="link-row">
-        <span class="link-label">美卡交流群</span>
+        <span class="link-label">美卡交流群 (免费)</span>
         <a href="https://t.me/uscloudnra" target="_blank" rel="noopener noreferrer" class="ext-link">
           https://t.me/uscloudnra
+        </a>
+      </div>
+      <div class="link-row link-row-vip">
+        <span class="link-label">👑 美卡云居民 VIP 群</span>
+        <a href="https://t.me/uscloudvipbot" target="_blank" rel="noopener noreferrer" class="ext-link vip-ext-link">
+          @uscloudvipbot (20 USD/年)
         </a>
       </div>
       <div class="link-row">
@@ -358,13 +372,20 @@
           即将运行：<strong id="tg-target-name">辅助脚本</strong>
         </div>
         <p class="tg-intro-text">
-          本工具已改为<strong>纯本地、纯免费开源版本</strong>，无任何授权限制。运行脚本前推荐加入美卡交流 Telegram 群聊，获取最新 ITIN 申卡攻略、银行风控动态与问题交流！
+          本工具已改为<strong>纯本地、纯免费开源版本</strong>，无任何授权限制。运行脚本前推荐加入美卡社群，获取更多美卡经验、实用攻略与骚操作：
         </p>
         <div class="tg-group-card">
           <div class="tg-group-badge">TG</div>
           <div class="tg-group-meta">
-            <div class="tg-group-name">美卡交流群 (@uscloudnra)</div>
+            <div class="tg-group-name">美卡交流群 (@uscloudnra) <span class="tg-tag-free">免费</span></div>
             <div class="tg-group-url">https://t.me/uscloudnra</div>
+          </div>
+        </div>
+        <div class="tg-group-card tg-vip-card">
+          <div class="tg-group-badge tg-vip-badge">VIP</div>
+          <div class="tg-group-meta">
+            <div class="tg-group-name">美卡云居民 VIP 群 <span class="tg-tag-vip">20 USD / 年</span></div>
+            <div class="tg-vip-sub">分享更多美卡经验、骚操作等 · Bot: @uscloudvipbot</div>
           </div>
         </div>
         <label class="tg-skip-row">
@@ -372,8 +393,11 @@
           <span>下次运行脚本不再弹出此推荐</span>
         </label>
         <div class="tg-modal-actions">
+          <button id="btn-tg-vip" class="btn tg-btn-vip" type="button">
+            👑 @uscloudvipbot 加入 VIP 群 (20 USD/年)
+          </button>
           <button id="btn-tg-join" class="btn tg-btn-join" type="button">
-            ✈️ 立即加入 TG 群聊 (@uscloudnra)
+            ✈️ 加入免费美卡交流群 (@uscloudnra)
           </button>
           <button id="btn-tg-continue" class="btn tg-btn-continue" type="button">
             ▶ 已了解 / 继续运行脚本

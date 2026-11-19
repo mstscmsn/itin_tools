@@ -1461,4 +1461,111 @@ body {
   background: #e2e8f0;
 }
 
+/* VIP Group Recommendation Styles */
+.vip-promo-banner {
+  display: block;
+  margin-top: 10px;
+  padding: 9px 11px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border: 1px solid #fcd34d;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.vip-promo-banner:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(217, 119, 6, 0.16);
+}
+
+.vip-promo-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.vip-promo-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #92400e;
+}
+
+.vip-promo-price {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #b45309;
+  background: #ffffff;
+  border: 1px solid #f59e0b;
+  border-radius: 999px;
+  padding: 1px 7px;
+}
+
+.vip-promo-desc {
+  font-size: 10.5px;
+  color: #78350f;
+  line-height: 1.4;
+}
+
+.link-row-vip .link-label {
+  color: #b45309;
+  font-weight: 600;
+}
+
+.vip-ext-link {
+  color: #b45309;
+  font-weight: 700;
+}
+
+.tg-tag-free {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.tg-vip-card {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border-color: #f59e0b;
+}
+
+.tg-vip-badge {
+  background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);
+  box-shadow: 0 2px 6px rgba(180, 83, 9, 0.3);
+}
+
+.tg-tag-vip {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #b45309;
+  border: 1px solid #f59e0b;
+}
+
+.tg-vip-sub {
+  font-size: 10.5px;
+  color: #78350f;
+  line-height: 1.35;
+}
+
+.tg-btn-vip {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  color: #ffffff;
+  font-size: 12.5px;
+  box-shadow: 0 3px 10px rgba(180, 83, 9, 0.28);
+}
+
+.tg-btn-vip:hover {
+  opacity: 0.95;
+}
+
 
