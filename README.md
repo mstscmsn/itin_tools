@@ -1,23 +1,26 @@
-# ITIN tools (v2.1.1 · 纯本地开源免费版)
+# ITIN tools (v2.2.0 · 纯本地开源免费版)
 
-**ITIN tools** 是一款纯本地运行、永久免费开源的 Chrome / Edge 浏览器辅助扩展，专为仅有 **ITIN**（个人纳税人识别号）的美卡玩家打造。
+**ITIN tools** 是一款核心纯本地运行、永久免费开源的 Chrome / Edge 浏览器辅助扩展，专为仅有 **ITIN**（个人纳税人识别号）的美卡玩家打造。
 
 - **开源仓库**：[https://github.com/mstscmsn/itin_tools](https://github.com/mstscmsn/itin_tools)
 - **官方网站**：[https://itin.nranote.com](https://itin.nranote.com)
 - **美卡交流 Telegram 群（免费）**：[https://t.me/uscloudnra](https://t.me/uscloudnra) (`@uscloudnra`)
 - **美卡云居民 VIP 群（20 USD / 年）**：添加机器人 **[@uscloudvipbot](https://t.me/uscloudvipbot)** 自助加群，分享更多美卡实战经验、高阶骚操作与风控技巧
 
-自 `v2.1.0` 起，本工具已彻底改为**纯本地、纯免费开源版本**：
-- **零服务器通信**：已移除全部远程授权校验、设备指纹采集、付费及云端额度接口。
-- **零隐私泄露**：所有页面辅助钩子与分析查询均在您的浏览器本地执行，不读取、不记录、不上传任何表单敏感信息或 Cookie。
-- **社区交流**：在每次运行辅助脚本前会友好弹窗推荐加入 Telegram 美卡交流群（可按需勾选不再提示）。
+自 `v2.1.0` 起，本工具已彻底改为**纯本地、纯免费开源版本**；`v2.2.0` 新增**茶色有卡版网银注册（MITM + 弹窗提醒）**并恢复**只读一键在线更新**：
+- **无授权/无指纹/无付费**：无任何授权校验、设备指纹采集、付费及云端额度接口。
+- **零隐私泄露**：所有页面辅助钩子、MITM 请求改写与 Alliant 分析查询均在您的浏览器本地执行，不读取、不记录、不上传任何表单敏感信息或 Cookie。
+- **只读在线一键更新**：服务端仅保留静态更新分发功能；打开插件仅发起只读版本检查，点击「立即更新」后在本地自动解压覆盖扩展目录并重载。
+- **社区交流**：在每次运行辅助脚本前会友好弹窗推荐加入 Telegram 美卡交流群及 VIP 群（可按需勾选不再提示）。
 
 ---
 
-## 核心功能（6 大本地通道）
+## 核心功能（6 大本地通道 · 含茶色双模式网银注册）
 
-1. **茶色网银在线注册** (`chase-boa-hook.js` + `content-chase-loader.js`)
-   - 0 Hard Pull 通过房贷通道建立网银 Profile，自动兼容 `9` 开头 ITIN 格式并放行相关跳过逻辑。
+1. **茶色网银在线注册（双模式：空网银 + 有卡版网银）** (`chase-boa-hook.js` + `content-chase-loader.js`)
+   - 点击「开始注册 茶色 网银」后弹窗选择模式：
+     - **空网银（现有功能）**：适合未持卡用户，0 Hard Pull 通过房贷通道建立网银 Profile，自动兼容 `9` 开头 ITIN 格式并放行相关跳过逻辑。
+     - **有卡版网银（v2.2.0 新增）**：适合已持有 Chase 信用卡/借记卡用户，启动前弹窗提醒操作注意事项，跳转至 `https://secure.chase.com/web/auth/enrollment#/enroll/onlineEnrollment/gettingStarted/index?LOB=`，并在本地执行 MITM——当请求 URL 包含 `svc/wl/auth/public/v4/user/enrollment/form/list` 时自动执行 `body.replace("ssn", "tin")`，页面右上角同步展示实时状态提醒徽章。
 2. **茶色信用卡 Pre-Approval** (`chase-boa-hook.js` + `content-chase-loader.js`)
    - 一键打开官方 Pre-Approval 页面，提交查询请求时本地将 `SSN` 类型字段转换为 `ITIN`。
 3. **BOA 信用卡 Pre-Approval** (`chase-boa-hook.js`)
@@ -43,6 +46,10 @@
 1. 克隆本仓库：`git clone https://github.com/mstscmsn/itin_tools.git`
 2. 在扩展管理页开启 **「开发者模式」**，直接加载仓库中的 `extension-src/` 目录即可。
 
+### 在线一键更新（v2.2.0 起恢复）
+- 打开插件弹窗时自动向官网 `https://itin.nranote.com/api/extension/latest` 发起只读版本检查；如有新版，顶部会出现黄色更新提示条。
+- 点击 **「立即更新」** 并授权选择本插件根目录，插件会在本地下载官方 zip 并解压覆盖完成更新（之后同一浏览器的后续更新无需再次选目录）。
+
 ---
 
 ## 目录说明
@@ -50,7 +57,8 @@
 - `extension-src/`：纯源码扩展目录（核心开源代码，未混淆、无加密）。
   - `manifest.json`：MV3 扩展配置（仅申请目标银行/信用站点权限）。
   - `background.js`：Service Worker，管理本地 DNR 去 CSP 规则与 5 分钟自动失效的内容脚本会话。
-  - `popup.html` / `popup.css` / `popup.js`：扩展弹窗界面、运行前 TG 群推荐弹窗、C1 地址与 Alliant 交互面板。
+  - `popup.html` / `popup.css` / `popup.js`：扩展弹窗界面、茶色网银双模式与有卡版提醒弹窗、TG 推荐弹窗、在线更新提示条。
+  - `updater.js` + `vendor/jszip.min.js`：跨平台未打包扩展目录在线一键更新模块（仅只读查询更新清单与下载官网离线包）。
   - `chase-boa-hook.js` / `content-chase-loader.js`：Chase & BOA 本地页面钩子与加载提示。
   - `credit-hook.js`：Credit.com 本地注册钩子。
   - `c1-address-hook.js` / `c1-address-bridge.js`：Capital One 本地强制地址注入与桥接。

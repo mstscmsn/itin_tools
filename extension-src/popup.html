@@ -13,12 +13,21 @@
       <div class="brand">
         <div class="brand-logo">IT</div>
         <div>
-          <h1 class="brand-title">ITIN tools <span id="ext-version" class="version-pill">v2.1.1</span></h1>
+          <h1 class="brand-title">ITIN tools <span id="ext-version" class="version-pill">v2.2.0</span></h1>
           <p class="brand-subtitle">纯本地 · 开源免费美卡 ITIN 辅助工具</p>
         </div>
       </div>
       <span id="status-badge" class="badge badge-auth">纯本地 · 免费版</span>
     </header>
+
+    <!-- Version Update Notification -->
+    <div id="update-bar" class="update-bar hidden">
+      <div>
+        <strong id="update-title">发现新版本</strong>
+        <p id="update-notes">检测到可用的官方更新包，点击即可在线覆盖更新。</p>
+      </div>
+      <button id="update-now" class="update-link" type="button">立即更新</button>
+    </div>
 
     <!-- Launch Animation View -->
     <div id="launch-view" class="card center-box hidden">
@@ -40,9 +49,9 @@
     <!-- Main View (Pure Local & Free) -->
     <div id="main-view">
       <div class="local-banner">
-        <div class="local-banner-title">🔓 开源免费 · 100% 纯本地运行</div>
+        <div class="local-banner-title">🔓 开源免费 · 纯本地辅助 · 支持在线更新</div>
         <div class="local-banner-desc">
-          无需授权码、不限设备与次数、零后台通信。全部辅助脚本与分析均在您的浏览器本地执行。
+          无需授权码、不限设备与次数。核心辅助逻辑 100% 本地运行，仅提供只读版本检查与官网一键覆盖更新。
         </div>
       </div>
 
@@ -357,6 +366,71 @@
     </footer>
   </div>
 
+  <!-- Chase Registration Mode Choice & Carded Reminder Modal -->
+  <div id="chase-reg-modal" class="privacy-modal hidden">
+    <div class="privacy-modal-card chase-modal-card">
+      <div id="chase-reg-header" class="privacy-modal-header chase-modal-header">
+        <div class="tg-header-title-wrap">
+          <span class="tg-badge-icon" aria-hidden="true">🚀</span>
+          <h3 id="chase-reg-modal-title">选择 茶色 网银注册方式</h3>
+        </div>
+        <button id="btn-close-chase-reg" type="button" class="privacy-close-btn" title="关闭">✕</button>
+      </div>
+
+      <!-- Step 1: Choose Cardless (空网银) vs Carded (有卡版网银) -->
+      <div id="chase-reg-step-select" class="privacy-modal-body tg-modal-body">
+        <div class="chase-remind-box">
+          💡 <strong>提示：</strong>请根据您当前是否已持有 Chase 信用卡/借记卡选择对应通道。有卡版会启用本地 MITM，在请求 <code>form/list</code> 时将 <code>ssn</code> 替换为 <code>tin</code>。
+        </div>
+        <div class="chase-choice-list">
+          <button id="btn-chase-empty" class="chase-choice-card chase-choice-empty" type="button">
+            <div class="chase-choice-top">
+              <span class="chase-choice-title">🆓 空网银</span>
+              <span class="chase-tag chase-tag-empty">无卡 · 现有功能</span>
+            </div>
+            <div class="chase-choice-desc">
+              适合尚未下卡用户：通过 0 HP 房贷通道提前建立网银 Profile，防 ID Theft 拒信与便捷 Recon。
+            </div>
+          </button>
+
+          <button id="btn-chase-carded" class="chase-choice-card chase-choice-carded" type="button">
+            <div class="chase-choice-top">
+              <span class="chase-choice-title">💳 有卡版网银</span>
+              <span class="chase-tag chase-tag-carded">已持卡 · MITM</span>
+            </div>
+            <div class="chase-choice-desc">
+              适合已下卡用户：跳转官方网银激活入口，在请求 <code>form/list</code> 时自动执行 <code>ssn → tin</code>。
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2: Explicit Popup Reminder for 有卡版网银 -->
+      <div id="chase-reg-step-carded-alert" class="privacy-modal-body tg-modal-body hidden">
+        <div class="chase-carded-alert-box">
+          <div class="chase-carded-alert-title">⚠️ 茶色有卡版网银 · 操作前弹窗提醒</div>
+          <ul class="chase-carded-alert-list">
+            <li><strong>适用条件：</strong>需<strong>已持有获批的 Chase 信用卡/借记卡</strong>；无卡请点下方「返回重选」并使用「空网银」。</li>
+            <li><strong>填写方式：</strong>进入注册页后输入卡号/账号与邮箱，在 <strong>SSN 栏位直接填入 9 开头的 9 位 ITIN</strong>。</li>
+            <li><strong>MITM 机制：</strong>当请求 URL 包含 <code>svc/wl/auth/public/v4/user/enrollment/form/list</code> 时，本地自动执行 <code>body.replace("ssn", "tin")</code>。</li>
+            <li><strong>有效时限：</strong>MITM 监听与页面右上角状态徽章在 <strong>5 分钟</strong>内有效；超时请重新从插件启动。</li>
+          </ul>
+        </div>
+        <div class="chase-url-preview">
+          目标页面：https://secure.chase.com/web/auth/enrollment#/enroll/onlineEnrollment/gettingStarted/index?LOB=
+        </div>
+        <div class="chase-carded-actions">
+          <button id="btn-chase-carded-confirm" class="btn btn-primary" type="button">
+            ✅ 我已知晓提醒，开始有卡版注册 →
+          </button>
+          <button id="btn-chase-carded-back" class="btn btn-carded-back" type="button">
+            ← 返回重选注册方式
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Telegram Community Recommendation Modal (Before Running Any Script) -->
   <div id="tg-modal" class="privacy-modal hidden">
     <div class="privacy-modal-card tg-modal-card">
@@ -371,6 +445,7 @@
         <div class="tg-target-pill">
           即将运行：<strong id="tg-target-name">辅助脚本</strong>
         </div>
+        <div id="tg-mode-reminder" class="tg-mode-reminder hidden"></div>
         <p class="tg-intro-text">
           本工具已改为<strong>纯本地、纯免费开源版本</strong>，无任何授权限制。运行脚本前推荐加入美卡社群，获取更多美卡经验、实用攻略与骚操作：
         </p>
@@ -416,26 +491,27 @@
       </div>
       <div class="privacy-modal-body">
         <div class="privacy-section">
-          <div class="privacy-section-title">一、100% 纯本地运行 · 零后台通信</div>
-          <p>本插件为开源免费版，<strong>没有任何后台授权服务器</strong>，不会收集或上传任何数据：</p>
+          <div class="privacy-section-title">一、核心纯本地运行 · 仅保留只读在线更新</div>
+          <p>本插件为开源免费版，<strong>无任何付费/授权或数据采集服务器</strong>，不会收集或上传您的个人信息：</p>
           <ul>
             <li><strong>无授权/无指纹采集</strong>：不采集邮箱、不生成浏览器指纹、无需授权码、不限制设备数与使用次数。</li>
-            <li><strong>最小权限原则</strong>：扩展仅申请目标银行/信用站点权限（<code>chase.com</code>、<code>bankofamerica.com</code>、<code>capitalone.com</code>、<code>credit.com</code>、<code>alliantcreditunion.com</code>），无外部 API 通信。</li>
-            <li><strong>本地配置存储</strong>：Capital One 强制地址与弹窗偏好仅保存在浏览器本地 <code>chrome.storage.local</code> 中。</li>
+            <li><strong>只读在线检查更新</strong>：打开弹窗仅向 <code>https://itin.nranote.com/api/extension/latest</code> 发起只读 <code>GET</code> 版本检查；仅在您点击「立即更新」后下载 <code>itin-tools.zip</code> 覆盖本地目录。</li>
+            <li><strong>最小权限原则</strong>：扩展仅申请目标银行/信用站点与更新服务器权限，本地配置（C1 地址、弹窗偏好）仅保存在 <code>chrome.storage.local</code>。</li>
           </ul>
         </div>
         <div class="privacy-section privacy-safe-box">
           <div class="privacy-section-title">二、绝不收集、绝不上传的信息承诺</div>
           <ul>
             <li><strong>零表单数据窥探</strong>：本插件<strong>绝不读取、记录或外发</strong>您在银行/信用官网填写的任何敏感信息（包括姓名、ITIN/SSN、生日、地址、电话、收入、账号密码及 Cookie）。</li>
-            <li><strong>直连官方服务器</strong>：所有辅助钩子及 Alliant 拒件分析均在浏览器本地执行，您的一切请求 100% 直连官方服务器。</li>
-            <li><strong>明文开源可审计</strong>：插件代码完全未混淆、未加密，您可直接在安装目录审阅全部源码。</li>
+            <li><strong>直连官方服务器</strong>：所有辅助钩子及 Alliant 拒件分析均在浏览器本地执行，您的一切银行/申卡请求 100% 直连官方服务器。</li>
+            <li><strong>明文开源可审计</strong>：核心代码完全未混淆、未加密，您可直接在安装目录审阅全部源码。</li>
           </ul>
         </div>
       </div>
     </div>
   </div>
 
+  <script src="vendor/jszip.min.js"></script>
   <script type="module" src="popup.js"></script>
 </body>
 </html>

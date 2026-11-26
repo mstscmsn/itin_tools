@@ -39,6 +39,20 @@ function copyRecursiveSync(src, dest) {
   }
 }
 
+function listFilesRecursive(dir, baseDir = dir) {
+  const results = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (entry.name === ".DS_Store") continue;
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      results.push(...listFilesRecursive(full, baseDir));
+    } else {
+      results.push(path.relative(baseDir, full));
+    }
+  }
+  return results;
+}
+
 async function main() {
   console.log("============================================================");
   console.log("🚀 ITIN Tools 插件打包流水线 (纯本地开源免费版)");
@@ -46,31 +60,37 @@ async function main() {
 
   // 1. Verify and check syntax of source files
   logStep(1, "检测并校验 extension-src/ 纯源码语法完整性...");
-  const jsFiles = fs.readdirSync(SRC_DIR).filter((f) => f.endsWith(".js"));
+  const allSrcFiles = listFilesRecursive(SRC_DIR);
+  const jsFiles = allSrcFiles.filter((f) => f.endsWith(".js"));
   for (const jsFile of jsFiles) {
     const fullPath = path.join(SRC_DIR, jsFile);
     execSync(`node -c "${fullPath}"`);
     console.log(`  ✓ 语法正确: ${jsFile}`);
   }
 
-  // Pure local & open-source audit: ensure zero remote auth/payment/credential upload patterns exist.
-  logStep("1b", "安全审计：确认纯本地开源版本无远端授权/支付/凭证上传...");
+  // Security audit: ensure zero remote auth/payment/credential upload patterns exist.
+  // Read-only online update checks strictly permit /api/extension/latest and /downloads/.
+  logStep("1b", "安全审计：确认无远端授权/支付/凭证上传，且在线更新仅限只读白名单接口...");
   const forbiddenPatterns = [
     "cookie: currentAlliantCookie",
     "/api/alliant/",
     "/api/auth/",
     "/api/checkout",
     "/api/pay/",
-    "/api/extension/latest",
-    "itin.nranote.com",
+    "/api/stripe/",
+    "/api/feature/",
     "chase.nranote.com",
     "hwFingerprint",
     "browserFingerprint"
   ];
-  const auditTargets = [
-    ...jsFiles,
-    ...fs.readdirSync(SRC_DIR).filter((f) => f.endsWith(".html") || f === "manifest.json")
+  const allowedUpdateUrls = [
+    /^https:\/\/itin\.nranote\.com\/api\/extension\/latest$/,
+    /^https:\/\/itin\.nranote\.com\/downloads\/[A-Za-z0-9._-]*$/,
+    /^https:\/\/itin\.nranote\.com\/\*$/
   ];
+  const auditTargets = allSrcFiles.filter(
+    (f) => !f.startsWith("vendor/") && (f.endsWith(".js") || f.endsWith(".html") || f === "manifest.json")
+  );
   for (const file of auditTargets) {
     const fullPath = path.join(SRC_DIR, file);
     const content = fs.readFileSync(fullPath, "utf8");
@@ -79,8 +99,14 @@ async function main() {
         throw new Error(`[Security Violation] Client file ${file} contains forbidden remote/auth pattern: "${pat}"!`);
       }
     }
+    const urls = content.match(/https?:\/\/itin\.nranote\.com[^\s"'`<>);]*/g) || [];
+    for (const url of urls) {
+      if (!allowedUpdateUrls.some((rx) => rx.test(url))) {
+        throw new Error(`[Security Violation] Client file ${file} contains non-whitelisted update server URL: "${url}"!`);
+      }
+    }
   }
-  console.log("  ✓ 审计通过：零远端授权、零支付接口、零指纹上传。");
+  console.log("  ✓ 审计通过：零远端授权、零支付接口、零指纹上传，在线更新严格限定只读接口。");
 
   // 2. Synchronize to extension/ distribution directory
   logStep(2, "同步纯源码至 extension/ 目录 (无混淆、无加密)...");
@@ -131,7 +157,7 @@ async function main() {
   const updateManifest = {
     version: manifest.version,
     url: "https://itin.nranote.com/downloads/itin-tools.zip",
-    notes: "纯本地开源免费版：下载后解压覆盖插件目录，在扩展管理页重新加载即可。",
+    notes: "v2.2.0：新增茶色有卡版网银注册（form/list 请求 MITM 将 ssn 替换为 tin + 双重弹窗提醒），并恢复一键在线更新。",
     publishedAt: new Date().toISOString()
   };
   fs.writeFileSync(

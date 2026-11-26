@@ -1,8 +1,8 @@
 /**
  * Background service worker (100% Local & Open-Source Edition).
- * All hooks (Chase mortgage/netbank, Chase pre, BOA pre, Credit.com signup,
+ * All hooks (Chase cardless/carded netbank, Chase pre, BOA pre, Credit.com signup,
  * Capital One force-address, and Alliant analysis/cancellation) run purely
- * locally inside the browser with zero backend server communication.
+ * locally inside the browser; only read-only update checks query the update server.
  */
 const ACTIVE_RULE_IDS = [100, 101];
 const LEGACY_REDIRECT_IDS = [1, 2, 3, 4, 5, 6, 7];
@@ -10,6 +10,8 @@ const LEGACY_REDIRECT_IDS = [1, 2, 3, 4, 5, 6, 7];
 const SITE_CONFIG = {
   openUrl:
     "https://secure.chase.com/web/oao/application/retail?cfgCode=502002&sourceCode=WHMDEF&SourceCode=WHMDEF#/origination/gettingStarted/gettingStarted/initiate",
+  enrollUrl:
+    "https://secure.chase.com/web/auth/enrollment#/enroll/onlineEnrollment/gettingStarted/index?LOB=",
   preUrl:
     "https://secure.chase.com/web/oao/application/card?cfgCode=PREAPPROVEDCONCC&flowVersion=REACT#/origination/preapproved/index/index;cellCode=63D5",
   c1PreUrl: "https://www.capitalone.com/apply/credit-cards/preapprove/",
@@ -100,6 +102,7 @@ const SITE_CONFIG = {
 const HOOK_TTL_MS = 5 * 60 * 1000;
 const SCRIPT_IDS = {
   chaseopen: "itin-chase",
+  chaseenroll: "itin-chase",
   chasepre: "itin-chase",
   bofapre: "itin-bofa",
   c1address: "itin-c1",
@@ -157,7 +160,7 @@ async function disableSiteRules() {
 
 async function openFeature(feature, url) {
   await enableSiteRules();
-  if (feature === "chaseopen" || feature === "chasepre") {
+  if (feature === "chaseopen" || feature === "chaseenroll" || feature === "chasepre") {
     await clearChaseCache();
   }
   await armHook(feature);
@@ -326,6 +329,13 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message.type === "START_REGISTRATION") {
     (async () => {
       sendResponse(await openFeature("chaseopen", SITE_CONFIG.openUrl));
+    })();
+    return true;
+  }
+
+  if (message.type === "START_CHASE_CARDED_ENROLL") {
+    (async () => {
+      sendResponse(await openFeature("chaseenroll", SITE_CONFIG.enrollUrl));
     })();
     return true;
   }

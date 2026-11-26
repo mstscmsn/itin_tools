@@ -1568,4 +1568,180 @@ body {
   opacity: 0.95;
 }
 
+/* Chase Registration Mode Modal & Reminders */
+.chase-modal-card {
+  max-width: 344px;
+  border-color: #bae6fd;
+}
+
+.chase-modal-header {
+  background: linear-gradient(135deg, #ecfdf5 0%, #eff6ff 100%);
+  border-bottom-color: #bae6fd;
+}
+
+.chase-modal-header-alert {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border-bottom-color: #fde68a;
+}
+
+.chase-remind-box {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e3a8a;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+
+.chase-choice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chase-choice-card {
+  width: 100%;
+  text-align: left;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.chase-choice-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+.chase-choice-empty:hover {
+  border-color: #059669;
+  background: #f0fdf4;
+}
+
+.chase-choice-carded {
+  border-color: #93c5fd;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+}
+
+.chase-choice-carded:hover {
+  border-color: #117aca;
+  background: #eff6ff;
+}
+
+.chase-choice-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.chase-choice-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.chase-tag {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.chase-tag-empty {
+  background: #d1fae5;
+  color: #047857;
+}
+
+.chase-tag-carded {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.chase-choice-desc {
+  font-size: 11px;
+  color: #475569;
+  line-height: 1.45;
+}
+
+.chase-carded-alert-box {
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  border-radius: 9px;
+  padding: 10px 11px;
+  color: #78350f;
+}
+
+.chase-carded-alert-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #92400e;
+  margin-bottom: 6px;
+}
+
+.chase-carded-alert-list {
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.chase-carded-alert-list code {
+  background: rgba(180, 83, 9, 0.12);
+  color: #92400e;
+  padding: 1px 4px;
+  border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10.5px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.chase-url-preview {
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 7px;
+  padding: 6px 8px;
+  font-size: 10px;
+  color: #475569;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  word-break: break-all;
+  line-height: 1.4;
+}
+
+.chase-carded-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 2px;
+}
+
+.btn-carded-back {
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+
+.btn-carded-back:hover {
+  background: #e2e8f0;
+}
+
+.tg-mode-reminder {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  color: #92400e;
+  border-radius: 7px;
+  padding: 7px 9px;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
 

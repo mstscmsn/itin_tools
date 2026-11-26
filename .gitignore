@@ -19,15 +19,17 @@ server/public/*
 server/public/images/*
 !server/public/images/cards/
 !server/public/images/cards/**
-!server/public/images/alliant-step-actions-v2.1.png
-!server/public/images/alliant-step-panel-v2.1.png
+!server/public/images/alliant-step-actions-v2.2.png
+!server/public/images/alliant-step-panel-v2.2.png
 !server/public/images/alliant-step-result.png
 !server/public/images/bofa-step-skip-prefill.png
 !server/public/images/chase-pre-itin-form.png
-!server/public/images/ext-bofa-v2.1.png
-!server/public/images/ext-c1-v2.1.png
-!server/public/images/ext-main-v2.1.png
-!server/public/images/ext-tg-modal-v2.1.png
+!server/public/images/ext-bofa-v2.2.png
+!server/public/images/ext-c1-v2.2.png
+!server/public/images/ext-chase-carded-alert-v2.2.png
+!server/public/images/ext-chase-modes-v2.2.png
+!server/public/images/ext-main-v2.2.png
+!server/public/images/ext-tg-modal-v2.2.png
 !server/public/images/step1-new-to-chase.jpg
 
 .DS_Store

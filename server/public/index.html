@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ITIN tools v2.1.1 - 开源免费的纯本地 ITIN 美卡申请辅助插件</title>
-  <meta name="description" content="ITIN tools Chrome 插件 v2.1.1（纯本地开源免费版）。零授权码、零后台通信，一键辅助茶色房贷/网银注册、茶色信用卡 Pre、BOA 信用卡 Pre、Credit.com 注册、Capital One 强制地址，以及 Alliant CU 本地拒件分析与撤销。" />
+  <title>ITIN tools v2.2.0 - 开源免费的纯本地 ITIN 美卡申请辅助插件</title>
+  <meta name="description" content="ITIN tools Chrome 插件 v2.2.0（纯本地开源免费版）。新增茶色有卡版网银注册（MITM 将 ssn 替换为 tin + 双重弹窗提醒）并恢复只读一键在线更新；保留空网银、茶色 Pre、BOA Pre、Credit.com 注册、C1 强制地址与 Alliant 拒件分析。" />
   <style>
     :root {
       --primary: #1d4ed8;
@@ -1214,17 +1214,17 @@
       <a href="#" class="brand">
         <div class="brand-icon">IT</div>
         <span>ITIN tools</span>
-        <span class="brand-version">v2.1 开源免费版</span>
+        <span class="brand-version">v2.2 开源免费版</span>
       </a>
       <nav class="nav-links">
         <a href="#features">六大功能</a>
         <a href="#tutorial">图文流程</a>
-        <a href="#install">本地安装</a>
+        <a href="#install">安装与更新</a>
         <a href="#privacy">开源与隐私</a>
         <a href="#community">交流群 &amp; VIP</a>
       </nav>
       <a href="/downloads/itin-tools.zip" class="nav-cta" download>
-        <span>⬇️ 免费下载插件 (v2.1.1)</span>
+        <span>⬇️ 免费下载插件 (v2.2.0)</span>
       </a>
     </div>
   </header>
@@ -1234,18 +1234,19 @@
     <div class="container hero-grid">
       <div>
         <div class="hero-tag">
-          <span>🔓 v2.1.1 开源免费版 · 100% 纯本地运行 · 零联网授权</span>
+          <span>🔓 v2.2.0 开源免费版 · 茶色网银双模式 (含 MITM 有卡版) · 支持一键在线更新</span>
         </div>
         <h1 class="hero-title">
           仅凭 <span>ITIN</span> 搞定美卡网银<br />
           &amp; 信用卡 Pre-Approval
         </h1>
         <p class="hero-subtitle">
-          <strong>ITIN tools</strong> 专为仅有 ITIN 的美卡玩家打造。现已全面升级为<strong>纯本地、纯免费开源版本</strong>：无需购买授权码、不限浏览器与使用次数、零服务器通信，一站式完成六大美卡申请本地辅助！
+          <strong>ITIN tools</strong> 专为仅有 ITIN 的美卡玩家打造。v2.2.0 延续<strong>纯本地免费开源架构</strong>（无授权码、不限设备与次数），新增<strong>茶色有卡版网银注册</strong>（本地 MITM 改写 <code>form/list</code> + 弹窗提醒），并恢复<strong>只读在线一键更新</strong>！
         </p>
         <ul class="step-points" style="margin: 10px 0 0;">
-          <li><span class="dot">✓</span> <span>彻底移除授权校验、设备指纹、付费接口与额度限制，全套脚本明文可见可审计。</span></li>
-          <li><span class="dot">✓</span> <span>内置运行前 Telegram 美卡交流群推荐弹窗，方便获取最新申卡攻略与风控讨论。</span></li>
+          <li><span class="dot">✓</span> <span>茶色网银升级为「空网银 + 有卡版网银」双选入口，兼顾无卡 0 HP 建档与已持卡激活。</span></li>
+          <li><span class="dot">✓</span> <span>服务端已关闭全部付费与授权接口，仅保留静态官网与只读版本清单用于弹窗内一键在线更新。</span></li>
+          <li><span class="dot">✓</span> <span>内置运行前 Telegram 美卡交流群推荐弹窗，方便获取最新申卡攻略与 VIP 高阶实战经验。</span></li>
         </ul>
 
         <!-- 6 Feature Pills in Hero -->
@@ -1262,8 +1263,8 @@
           </div>
           <div class="hero-pill-card pill-open">
             <div class="hero-pill-icon">🚀</div>
-            <div class="hero-pill-title">茶色 网银在线开立</div>
-            <div class="hero-pill-desc">0 Hard Pull 提前建 Profile，防 ID Theft 审核</div>
+            <div class="hero-pill-title">茶色 网银注册 (双模式)</div>
+            <div class="hero-pill-desc">空网银 (0 HP 建档) + 有卡版网银 (MITM ssn→tin)</div>
           </div>
           <div class="hero-pill-card pill-credit">
             <div class="hero-pill-icon">📊</div>
@@ -1284,7 +1285,7 @@
 
         <div class="hero-actions">
           <a href="/downloads/itin-tools.zip" class="btn-main" download>
-            <span>⬇️ 免费下载插件 v2.1.1 (离线包)</span>
+            <span>⬇️ 免费下载插件 v2.2.0 (离线包)</span>
           </a>
           <a href="https://t.me/uscloudnra" target="_blank" rel="noopener noreferrer" class="btn-tg">
             <span>✈️ 加入 TG 美卡交流群</span>
@@ -1296,20 +1297,20 @@
 
         <div class="hero-free-card">
           <div class="hero-free-main">
-            <div class="hero-free-kicker">OPEN SOURCE &amp; 100% LOCAL · 永久免费</div>
+            <div class="hero-free-kicker">OPEN SOURCE &amp; 100% LOCAL · 永久免费 · 在线更新</div>
             <div class="hero-free-row">
               <span class="hero-free-now">$0.00</span>
               <span class="hero-free-badge">开源免费</span>
-              <span class="hero-free-badge blue">零数据上传</span>
+              <span class="hero-free-badge blue">只读一键更新</span>
             </div>
             <div class="hero-free-note">
-              无需授权码 · 不限浏览器数量 · 不限 Alliant 分析次数 · 明文源码可审计 · 解压即用
+              无需授权码 · 不限设备与次数 · 不限 Alliant 分析次数 · 明文源码可审计 · 支持弹窗内在线更新
             </div>
           </div>
           <div class="oss-chip" title="纯本地开源免费版本">
             <span class="oss-chip-label">OPEN SOURCE</span>
             <span class="oss-chip-code">100% FREE</span>
-            <span class="oss-chip-sub">纯本地零后台</span>
+            <span class="oss-chip-sub">核心逻辑纯本地</span>
           </div>
         </div>
 
@@ -1325,13 +1326,16 @@
         <div class="preview-card">
           <div class="preview-tabs">
             <button id="btn-prev-main" class="prev-tab-btn active" type="button" onclick="setHeroPreview('main')">
-              📱 主界面 (纯本地)
+              📱 主界面
+            </button>
+            <button id="btn-prev-chase" class="prev-tab-btn" type="button" onclick="setHeroPreview('chase')">
+              💳 茶色双模式
             </button>
             <button id="btn-prev-tg" class="prev-tab-btn" type="button" onclick="setHeroPreview('tg')">
-              ✈️ 运行前 TG 推荐
+              ✈️ TG 弹窗
             </button>
           </div>
-          <img id="hero-preview-img" src="/images/ext-main-v2.1.png" alt="ITIN tools v2.1.1 纯本地开源版插件主界面" onclick="openLightbox(this.src)" />
+          <img id="hero-preview-img" src="/images/ext-main-v2.2.png" alt="ITIN tools v2.2.0 纯本地开源版插件主界面" onclick="openLightbox(this.src)" />
           <div class="preview-caption">🔍 点击上方按钮切换界面预览 · 点击图片可放大查看</div>
         </div>
       </div>
@@ -1479,35 +1483,35 @@
         </div>
       </div>
 
-      <!-- Tab 3: 茶色 Online Profile -->
+      <!-- Tab 3: 茶色 Online Profile (空网银 + 有卡版网银) -->
       <div id="feature-tab-chaseopen" class="tab-content">
         <div class="benefits-grid">
           <div class="benefit-item">
-            <div class="benefit-icon">✨</div>
-            <div class="benefit-title">1. 免先下卡，0 HP 免费创建网银</div>
+            <div class="benefit-icon">🆓</div>
+            <div class="benefit-title">1. 模式一：空网银注册（0 HP 无卡提前建档）</div>
             <div class="benefit-desc">
-              无需持有 茶色 支票账户或信用卡，通过房贷通道仅凭 ITIN 免费在线创建 茶色 Profile，<strong>0 Hard Pull，不影响信用分</strong>。
+              尚未持有茶色信用卡或支票账户时使用：通过房贷通道仅凭 9 开头 ITIN 在线创建 网银 Profile，<strong>0 Hard Pull</strong> 提前接收防 ID Theft 通知并支持 Recon App 验证。
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon">💳</div>
+            <div class="benefit-title">2. 模式二：有卡版网银注册（v2.2.0 新增）</div>
+            <div class="benefit-desc">
+              已获批 Chase 信用卡/借记卡时使用：自动跳转 <code>secure.chase.com/web/auth/enrollment</code> 激活入口，突破前端 SSN 限制直接完成有卡网银注册。
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon">🛡️</div>
+            <div class="benefit-title">3. 有卡版 MITM 请求改写（ssn → tin）</div>
+            <div class="benefit-desc">
+              在浏览器本地监听包含 <code>svc/wl/auth/public/v4/user/enrollment/form/list</code> 的请求，自动执行 <code>body.replace("ssn", "tin")</code>，无需外部代理工具。
             </div>
           </div>
           <div class="benefit-item">
             <div class="benefit-icon">🔔</div>
-            <div class="benefit-title">2. 防 ID Theft 审核第一时间接收通知</div>
+            <div class="benefit-title">4. 启动前与页内双重弹窗提醒</div>
             <div class="benefit-desc">
-              申请信用卡如果触发防盗号风控（ID Theft），提前拥有网银账号可以第一时间在 App/网页收到通知并致电解除，防止因超时未响应被拒。
-            </div>
-          </div>
-          <div class="benefit-item">
-            <div class="benefit-icon">📱</div>
-            <div class="benefit-title">3. Recon 电话 App 弹窗秒验证</div>
-            <div class="benefit-desc">
-              在拨打 Recon 客服申请复议时，客服可直接向您已登录的 茶色 App 发送安全推送弹窗快速核实身份，免去繁琐的信件资料寄送。
-            </div>
-          </div>
-          <div class="benefit-item">
-            <div class="benefit-icon">📊</div>
-            <div class="benefit-title">4. 随时在线查询信用卡审批进度</div>
-            <div class="benefit-desc">
-              无需反复拨打自动语音电话或等待平邮纸质信件，登录已创建的 茶色 网银即可随时在线查看办卡审批状态。
+              选择「有卡版网银」后立即展示重要操作弹窗提醒，并在注册页右上角实时显示 MITM 监听及 <code>ssn → tin</code> 拦截成功状态（5 分钟自动失效）。
             </div>
           </div>
         </div>
@@ -1667,14 +1671,14 @@
               </ul>
             </div>
             <div class="step-img-box">
-              <img src="/images/ext-main-v2.1.png" alt="ITIN tools 纯本地开源版主界面" onclick="openLightbox(this.src)" />
+              <img src="/images/ext-main-v2.2.png" alt="ITIN tools 纯本地开源版主界面" onclick="openLightbox(this.src)" />
               <div class="step-zoom-hint">🔍 点击放大图片</div>
             </div>
           </div>
 
           <div class="tutorial-step-card reverse">
             <div class="step-img-box">
-              <img src="/images/ext-bofa-v2.1.png" alt="BOA 二级选卡面板" onclick="openLightbox(this.src)" />
+              <img src="/images/ext-bofa-v2.2.png" alt="BOA 二级选卡面板" onclick="openLightbox(this.src)" />
               <div class="step-zoom-hint">🔍 点击放大图片</div>
             </div>
             <div>
@@ -1725,7 +1729,7 @@
               </ul>
             </div>
             <div class="step-img-box">
-              <img src="/images/ext-main-v2.1.png" alt="点击 茶色 信用卡 Pre 按钮" onclick="openLightbox(this.src)" />
+              <img src="/images/ext-main-v2.2.png" alt="点击 茶色 信用卡 Pre 按钮" onclick="openLightbox(this.src)" />
               <div class="step-zoom-hint">🔍 点击放大图片</div>
             </div>
           </div>
@@ -1750,41 +1754,60 @@
         </div>
       </div>
 
-      <!-- Guide 3: 茶色 Open -->
+      <!-- Guide 3: 茶色 Open (空网银 + 有卡版网银) -->
       <div id="guide-chaseopen" class="tab-content">
         <div class="tutorial-steps-wrap">
           <div class="tutorial-step-card">
             <div>
               <span class="step-badge">STEP 01</span>
-              <h3 class="step-title">点击「🚀 开始注册 茶色 网银」按钮</h3>
+              <h3 class="step-title">点击「🚀 开始注册 茶色 网银」后选择模式</h3>
               <p class="step-desc">
-                在插件小窗口点击绿色按钮 <strong>「🚀 开始注册 茶色 网银」</strong>，在弹窗中点击「继续运行脚本」启动本地环境。
+                在插件窗口点击绿色按钮 <strong>「🚀 开始注册 茶色 网银」</strong> 后，会弹出选择窗口供您切换：
               </p>
               <ul class="step-points">
-                <li><span class="dot">✓</span> <span>插件自动配置本地钩子并跳转至 茶色 官方网银注册通道（预计需 7~8 秒加载）。</span></li>
+                <li><span class="dot">✓</span> <span><strong>🆓 空网银（现有功能）</strong>：尚未持有 Chase 卡，希望通过 0 HP 房贷通道提前建立 Profile。</span></li>
+                <li><span class="dot">✓</span> <span><strong>💳 有卡版网银（v2.2.0 新增）</strong>：已获批 Chase 信用卡/借记卡，启用 MITM 激活网银账号。</span></li>
               </ul>
             </div>
             <div class="step-img-box">
-              <img src="/images/ext-main-v2.1.png" alt="点击开始注册网银" onclick="openLightbox(this.src)" />
+              <img src="/images/ext-chase-modes-v2.2.png" alt="选择空网银或有卡版网银模式" onclick="openLightbox(this.src)" />
               <div class="step-zoom-hint">🔍 点击放大图片</div>
             </div>
           </div>
 
           <div class="tutorial-step-card reverse">
             <div class="step-img-box">
-              <img src="/images/step1-new-to-chase.jpg" alt="选择 I am new to 茶色" onclick="openLightbox(this.src)" />
-              <div class="step-zoom-hint">🔍 点击放大图片</div>
+              <img src="/images/step1-new-to-chase.jpg" alt="空网银选择 I am new to 茶色" onclick="openLightbox(this.src)" />
+              <div class="step-zoom-hint">空网银模式 · 点击放大</div>
             </div>
             <div>
-              <span class="step-badge">STEP 02</span>
-              <h3 class="step-title">勾选「I'm new to 茶色」并输入 ITIN</h3>
+              <span class="step-badge">空网银 · STEP 02</span>
+              <h3 class="step-title">空网银模式：勾选「I'm new to 茶色」并输入 ITIN</h3>
               <p class="step-desc">
-                选择 “Sign in to start your home journey with us” 页面中的 <strong>「I'm new to 茶色」</strong>（即页面上的新用户选项）。
+                进入房贷通道后选择 <strong>「I'm new to 茶色」</strong>，按指引填写姓名、地址与 ITIN 即可 0 HP 创建网银 Profile。
               </p>
               <ul class="step-points">
-                <li><span class="dot">✓</span> <span>按照指引填写姓名、美国地址、境外或美国手机号及邮箱。</span></li>
-                <li><span class="dot">✓</span> <span>在税号栏输入 ITIN，设置用户名和密码，完成网银 Profile 创建！</span></li>
+                <li><span class="dot">✓</span> <span>无需持有卡片即可接收防 ID Theft 通知与 App Recon 弹窗验证。</span></li>
+                <li><span class="dot">✓</span> <span>提交时自动在本地适配 9 开头 ITIN 校验与参数转换。</span></li>
               </ul>
+            </div>
+          </div>
+
+          <div class="tutorial-step-card">
+            <div>
+              <span class="step-badge">有卡版 · STEP 03</span>
+              <h3 class="step-title">有卡版网银：阅读弹窗提醒并用 MITM 注册</h3>
+              <p class="step-desc">
+                点击「有卡版网银」后会弹出明确的操作注意事项提醒，确认后将自动跳转 <code>https://secure.chase.com/web/auth/enrollment#/enroll/onlineEnrollment/gettingStarted/index?LOB=</code>。
+              </p>
+              <ul class="step-points">
+                <li><span class="dot">✓</span> <span><strong>填写方法</strong>：输入您已获批的 Chase 卡号/账号，并在 SSN 栏直接填 <strong>9 位 ITIN</strong>。</span></li>
+                <li><span class="dot">✓</span> <span><strong>MITM 自动替换</strong>：当请求 URL 包含 <code>svc/wl/auth/public/v4/user/enrollment/form/list</code> 时，本地自动执行 <code>body.replace("ssn", "tin")</code>，并在页面右上角实时显示拦截成功提示！</span></li>
+              </ul>
+            </div>
+            <div class="step-img-box">
+              <img src="/images/ext-chase-carded-alert-v2.2.png" alt="茶色有卡版网银操作弹窗提醒" onclick="openLightbox(this.src)" />
+              <div class="step-zoom-hint">有卡版弹窗提醒 · 点击放大</div>
             </div>
           </div>
         </div>
@@ -1806,14 +1829,14 @@
               </ul>
             </div>
             <div class="step-img-box">
-              <img src="/images/ext-main-v2.1.png" alt="点击 Credit.com ITIN 注册" onclick="openLightbox(this.src)" />
+              <img src="/images/ext-main-v2.2.png" alt="点击 Credit.com ITIN 注册" onclick="openLightbox(this.src)" />
               <div class="step-zoom-hint">🔍 点击放大图片</div>
             </div>
           </div>
 
           <div class="tutorial-step-card reverse">
             <div class="step-img-box">
-              <img src="/images/ext-tg-modal-v2.1.png" alt="运行前推荐加入 TG 群弹窗" onclick="openLightbox(this.src)" />
+              <img src="/images/ext-tg-modal-v2.2.png" alt="运行前推荐加入 TG 群弹窗" onclick="openLightbox(this.src)" />
               <div class="step-zoom-hint">🔍 点击放大图片</div>
             </div>
             <div>
@@ -1847,14 +1870,14 @@
               </ul>
             </div>
             <div class="step-img-box">
-              <img src="/images/ext-c1-v2.1.png" alt="C1 强制地址填写面板" onclick="openLightbox(this.src)" />
+              <img src="/images/ext-c1-v2.2.png" alt="C1 强制地址填写面板" onclick="openLightbox(this.src)" />
               <div class="step-zoom-hint">🔍 点击放大图片</div>
             </div>
           </div>
 
           <div class="tutorial-step-card reverse">
             <div class="step-img-box">
-              <img src="/images/ext-tg-modal-v2.1.png" alt="启动前 TG 交流群提示" onclick="openLightbox(this.src)" />
+              <img src="/images/ext-tg-modal-v2.2.png" alt="启动前 TG 交流群提示" onclick="openLightbox(this.src)" />
               <div class="step-zoom-hint">🔍 点击放大图片</div>
             </div>
             <div>
@@ -1888,14 +1911,14 @@
               </ul>
             </div>
             <div class="step-img-box">
-              <img src="/images/ext-main-v2.1.png" alt="插件主界面点击 Alliant 拒绝分析与取消" onclick="openLightbox(this.src)" />
+              <img src="/images/ext-main-v2.2.png" alt="插件主界面点击 Alliant 拒绝分析与取消" onclick="openLightbox(this.src)" />
               <div class="step-zoom-hint">主界面 · 点击放大</div>
             </div>
           </div>
 
           <div class="tutorial-step-card reverse">
             <div class="step-img-box">
-              <img src="/images/alliant-step-panel-v2.1.png" alt="Alliant 本地免费面板" onclick="openLightbox(this.src)" />
+              <img src="/images/alliant-step-panel-v2.2.png" alt="Alliant 本地免费面板" onclick="openLightbox(this.src)" />
               <div class="step-zoom-hint">纯本地面板 · 点击放大</div>
             </div>
             <div>
@@ -1924,7 +1947,7 @@
               </ul>
             </div>
             <div class="step-img-box">
-              <img src="/images/alliant-step-actions-v2.1.png" alt="本地登录状态检测、分析拒绝原因与取消申请" onclick="openLightbox(this.src)" />
+              <img src="/images/alliant-step-actions-v2.2.png" alt="本地登录状态检测、分析拒绝原因与取消申请" onclick="openLightbox(this.src)" />
               <div class="step-zoom-hint">操作按钮 · 点击放大</div>
             </div>
           </div>
@@ -1955,37 +1978,37 @@
   <section id="install" class="section">
     <div class="container">
       <div class="section-header">
-        <span class="section-badge">INSTALL &amp; OPEN SOURCE</span>
-        <h2 class="section-title">本地安装与纯开源说明</h2>
-        <p class="section-desc">下载离线包即可 3 步加载使用，无任何账户绑定与授权激活流程</p>
+        <span class="section-badge">INSTALL &amp; AUTO UPDATE</span>
+        <h2 class="section-title">本地安装与一键在线更新说明</h2>
+        <p class="section-desc">首次下载离线包 3 步加载，后续可在插件弹窗内直接点击「立即更新」自动覆盖升级</p>
       </div>
 
       <div class="install-box">
         <div class="install-steps">
-          <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 6px; color: #0f172a;">🛠️ Chrome / Edge 3 步快速安装</h3>
+          <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 6px; color: #0f172a;">🛠️ Chrome / Edge 3 步快速安装与后续更新</h3>
           <div class="install-step-item">
             <div class="install-num">1</div>
-            <div class="install-text">点击右上角按钮下载 <code>itin-tools.zip</code> 并解压到本地常用文件夹。</div>
+            <div class="install-text">点击右上角按钮下载 <code>itin-tools.zip</code> 并解压到本地固定文件夹。</div>
           </div>
           <div class="install-step-item">
             <div class="install-num">2</div>
-            <div class="install-text">在浏览器地址栏输入 <code>chrome://extensions</code>，并在右上角开启<strong>「开发者模式」</strong>。</div>
+            <div class="install-text">在浏览器地址栏输入 <code>chrome://extensions</code>，开启右上角<strong>「开发者模式」</strong>后点击「加载已解压的扩展程序」选中该文件夹。</div>
           </div>
           <div class="install-step-item">
             <div class="install-num">3</div>
-            <div class="install-text">点击左上角<strong>「加载已解压的扩展程序」</strong>，选择解压出的文件夹即可立即免费使用！</div>
+            <div class="install-text">后续有新版本发布时，弹窗顶部会提示<strong>「发现新版本 → 立即更新」</strong>；首次点击授权选中该插件根目录后即可自动下载解压覆盖并重载！</div>
           </div>
         </div>
 
         <div style="background: #f0fdf4; border: 1px solid #a7f3d0; border-radius: var(--radius-sm); padding: 18px;">
-          <h4 style="font-size: 15px; font-weight: 700; color: #065f46; margin-bottom: 8px;">🔓 纯本地开源免费版本优势</h4>
+          <h4 style="font-size: 15px; font-weight: 700; color: #065f46; margin-bottom: 8px;">🔓 纯本地开源架构 · 服务端仅保留在线更新</h4>
           <p style="font-size: 13px; color: #064e3b; line-height: 1.65; margin-bottom: 10px;">
-            1. <strong>彻底零门槛</strong>：无需邮箱、无需授权码、不绑定浏览器指纹，换电脑或重装浏览器解压即用。<br/>
-            2. <strong>完全明文开源</strong>：插件内所有 JavaScript / HTML / CSS 均为未混淆纯源码，无闭源 WASM、无云端下发、无加密壳。<br/>
-            3. <strong>安全可审计</strong>：欢迎在解压目录直接检查 <code>manifest.json</code> 与全部脚本代码。
+            1. <strong>零门槛免费使用</strong>：无授权码、无付费功能、不绑定浏览器指纹，换电脑或重装浏览器解压即用。<br/>
+            2. <strong>最小化更新接口</strong>：后端已彻底关闭所有认证/支付/分析 API，仅保留只读的 <code>/api/extension/latest</code> 与 <code>itin-tools.zip</code> 分发。<br/>
+            3. <strong>安全可审计</strong>：欢迎在解压目录直接审查 <code>manifest.json</code>、<code>updater.js</code> 及全部脚本源码。
           </p>
           <div style="font-size: 12px; color: #047857; font-weight: 600;">
-            💡 提示：如遇银行页面改版或风控规则变化，欢迎在 TG 美卡交流群反馈！
+            💡 提示：如遇银行页面改版或风控规则变化，欢迎在 TG 美卡交流群或 VIP 群反馈！
           </div>
         </div>
       </div>
@@ -1997,8 +2020,8 @@
     <div class="container">
       <div class="section-header">
         <span class="section-badge">TRANSPARENCY &amp; PRIVACY</span>
-        <h2 class="section-title">开源透明与零数据上传声明</h2>
-        <p class="section-desc">纯本地架构，不设任何后台收集服务器，坚持零上传、零窥探原则</p>
+        <h2 class="section-title">开源透明与零隐私上传声明</h2>
+        <p class="section-desc">核心逻辑 100% 本地运行，官网服务器仅保留只读更新分发，坚持零上传、零窥探原则</p>
       </div>
 
       <div class="privacy-grid">
@@ -2017,9 +2040,14 @@
             </thead>
             <tbody>
               <tr>
-                <td><code>后台授权服务器</code></td>
-                <td><strong>零通信</strong></td>
-                <td>已彻底移除所有授权检查、支付回调与远程更新请求，插件不向任何开发者服务器发起网络请求。</td>
+                <td><code>付费与授权接口</code></td>
+                <td><strong>已关闭</strong></td>
+                <td>服务端所有登录、授权验证、支付与 Alliant 中转 API 均已永久下线关闭。</td>
+              </tr>
+              <tr>
+                <td><code>只读在线更新</code></td>
+                <td><strong>仅 GET 下载</strong></td>
+                <td>打开弹窗仅请求 <code>/api/extension/latest</code> 比对版本号；点击「立即更新」后才下载官网 zip 覆盖目录，不附带任何本地参数。</td>
               </tr>
               <tr>
                 <td><code>邮箱 / 指纹 / 授权码</code></td>
@@ -2027,14 +2055,9 @@
                 <td>已删除全部 Canvas/WebGL 指纹代码与邮箱表单，不再生成或存储任何设备识别信息。</td>
               </tr>
               <tr>
-                <td><code>C1 强制地址</code></td>
-                <td><strong>仅存本地</strong></td>
-                <td>仅缓存在您浏览器的 <code>chrome.storage.local</code> 中，只在 Capital One 预审提交时页内注入。</td>
-              </tr>
-              <tr>
-                <td><code>Alliant 分析撤销</code></td>
-                <td><strong>页内直连</strong></td>
-                <td>仅在已登录的 <code>open.alliantcreditunion.com</code> 标签页本地请求官网 <code>/graphql</code>，凭证绝不离开本机。</td>
+                <td><code>C1 强制地址 &amp; Alliant</code></td>
+                <td><strong>纯本地</strong></td>
+                <td>C1 地址仅存于 <code>chrome.storage.local</code>；Alliant 分析仅在已登录官方标签页直连官方 <code>/graphql</code>。</td>
               </tr>
             </tbody>
           </table>
@@ -2048,15 +2071,15 @@
           <ul class="safe-list">
             <li>
               <strong>1. 绝不读取或窥探任何银行表单敏感数据</strong><br/>
-              您在 茶色、BOA、Capital One、Credit.com、Alliant 页面填写的姓名、ITIN/SSN、生日、地址、电话、收入、网银账号密码及 Cookie，插件<strong>不会读取、不会记录、不会外发</strong>。
+              您在 茶色（空网银 / 有卡版网银）、BOA、Capital One、Credit.com、Alliant 页面填写的姓名、卡号、ITIN/SSN、生日、地址、电话、账号密码及 Cookie，插件<strong>不会读取、不会记录、不会外发</strong>。
             </li>
             <li>
-              <strong>2. 纯本地动态适配，直连官方服务器</strong><br/>
-              所有前端校验钩子均仅在浏览器本地内存中按需运行（5 分钟自动关闭），您填写的所有申请资料<strong>100% 直连各银行与平台官方服务器</strong>，不经过任何第三方中转。
+              <strong>2. 纯本地 MITM 与动态适配，直连官方服务器</strong><br/>
+              包括有卡版网银的 <code>form/list</code> MITM 在内的所有前端钩子均仅在浏览器本地内存中按需运行（5 分钟自动关闭），您填写的所有申请资料<strong>100% 直连各银行与平台官方服务器</strong>，不经过任何第三方中转。
             </li>
             <li>
-              <strong>3. 100% 明文源码，欢迎安全审计</strong><br/>
-              打包出的扩展内无任何混淆压缩脚本或远程代码执行（<code>manifest.json</code> 仅声明目标业务域名权限），您可以随时逐行审查全部源码。
+              <strong>3. 核心代码完全明文，欢迎安全审计</strong><br/>
+              扩展内核心业务代码无任何混淆加密或远程代码执行，您可以随时逐行审查全部源码（解压辅助库采用标准官方 <code>jszip.min.js</code>）。
             </li>
           </ul>
         </div>
@@ -2158,7 +2181,7 @@
           <a href="https://github.com/mstscmsn/itin_tools" target="_blank" rel="noopener noreferrer">GitHub 源码</a>
           <a href="https://t.me/uscloudnra" target="_blank" rel="noopener noreferrer">免费 TG 群</a>
           <a href="https://t.me/uscloudvipbot" target="_blank" rel="noopener noreferrer">VIP 群 (@uscloudvipbot)</a>
-          <a href="/downloads/itin-tools.zip" download>免费下载 (v2.1.1)</a>
+          <a href="/downloads/itin-tools.zip" download>免费下载 (v2.2.0)</a>
         </div>
       </div>
       <div class="footer-copy">
@@ -2177,14 +2200,17 @@
     function setHeroPreview(view) {
       const img = document.getElementById('hero-preview-img');
       const btnMain = document.getElementById('btn-prev-main');
+      const btnChase = document.getElementById('btn-prev-chase');
       const btnTg = document.getElementById('btn-prev-tg');
-      if (!img || !btnMain || !btnTg) return;
+      if (!img || !btnMain || !btnChase || !btnTg) return;
       const shots = {
-        main: '/images/ext-main-v2.1.png',
-        tg: '/images/ext-tg-modal-v2.1.png'
+        main: '/images/ext-main-v2.2.png',
+        chase: '/images/ext-chase-modes-v2.2.png',
+        tg: '/images/ext-tg-modal-v2.2.png'
       };
       img.src = shots[view] || shots.main;
-      btnMain.classList.toggle('active', view !== 'tg');
+      btnMain.classList.toggle('active', view === 'main' || !(view in shots));
+      btnChase.classList.toggle('active', view === 'chase');
       btnTg.classList.toggle('active', view === 'tg');
     }
 

@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "ITIN tools",
-  "version": "2.1.1",
-  "description": "纯本地开源免费版 ITIN 美卡申请辅助工具：茶色 网银/信用卡 Pre、BOA Pre、Credit.com 注册、Capital One 强制地址、Alliant 拒件本地分析与取消，零联网授权、零数据上传。",
+  "version": "2.2.0",
+  "description": "纯本地开源免费版 ITIN 美卡申请辅助工具：茶色网银（空网银 / 有卡版网银）、茶色 Pre、BOA Pre、Credit.com 注册、Capital One 强制地址、Alliant 本地分析与取消，支持只读在线检查更新。",
   "permissions": [
     "declarativeNetRequest",
     "declarativeNetRequestWithHostAccess",
@@ -17,7 +17,8 @@
     "*://*.capitalone.com/*",
     "*://*.credit.com/*",
     "*://*.alliantcreditunion.com/*",
-    "https://open.alliantcreditunion.com/*"
+    "https://open.alliantcreditunion.com/*",
+    "https://itin.nranote.com/*"
   ],
   "background": {
     "service_worker": "background.js"
@@ -27,7 +28,7 @@
   },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "ITIN tools v2.1.1",
+    "default_title": "ITIN tools v2.2.0",
     "default_icon": {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",
@@ -43,7 +44,8 @@
     {
       "matches": [
         "https://secure.chase.com/web/oao/application/retail*",
-        "https://secure.chase.com/web/oao/application/card*"
+        "https://secure.chase.com/web/oao/application/card*",
+        "https://secure.chase.com/web/auth/enrollment*"
       ],
       "js": [
         "content-chase-loader.js"

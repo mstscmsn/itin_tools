@@ -2,6 +2,7 @@ import {
   analyzeAlliantLocally,
   cancelAlliantLocally
 } from "./alliant-local.js";
+import "./updater.js";
 
 const TG_GROUP_URL = "https://t.me/uscloudnra";
 const TG_VIP_BOT_URL = "https://t.me/uscloudvipbot";
@@ -47,9 +48,25 @@ const btnAlliantCancel = document.getElementById("btn-alliant-cancel");
 const alliantCancelStatus = document.getElementById("alliant-cancel-status");
 
 const extVersionEl = document.getElementById("ext-version");
+const updateBar = document.getElementById("update-bar");
+const updateTitle = document.getElementById("update-title");
+const updateNotes = document.getElementById("update-notes");
+const updateNow = document.getElementById("update-now");
+
+const chaseRegModal = document.getElementById("chase-reg-modal");
+const chaseRegHeader = document.getElementById("chase-reg-header");
+const chaseRegModalTitle = document.getElementById("chase-reg-modal-title");
+const chaseRegStepSelect = document.getElementById("chase-reg-step-select");
+const chaseRegStepCardedAlert = document.getElementById("chase-reg-step-carded-alert");
+const btnCloseChaseReg = document.getElementById("btn-close-chase-reg");
+const btnChaseEmpty = document.getElementById("btn-chase-empty");
+const btnChaseCarded = document.getElementById("btn-chase-carded");
+const btnChaseCardedConfirm = document.getElementById("btn-chase-carded-confirm");
+const btnChaseCardedBack = document.getElementById("btn-chase-carded-back");
 
 const tgModal = document.getElementById("tg-modal");
 const tgTargetName = document.getElementById("tg-target-name");
+const tgModeReminder = document.getElementById("tg-mode-reminder");
 const tgSkipCheckbox = document.getElementById("tg-skip-checkbox");
 const btnCloseTg = document.getElementById("btn-close-tg");
 const btnTgVip = document.getElementById("btn-tg-vip");
@@ -83,7 +100,36 @@ function showMainView() {
 
 function closeTgModal() {
   if (tgModal) tgModal.classList.add("hidden");
+  if (tgModeReminder) {
+    tgModeReminder.textContent = "";
+    tgModeReminder.classList.add("hidden");
+  }
   pendingRunAction = null;
+}
+
+function showChaseSelectStep() {
+  if (chaseRegHeader) chaseRegHeader.classList.remove("chase-modal-header-alert");
+  if (chaseRegModalTitle) chaseRegModalTitle.textContent = "选择 茶色 网银注册方式";
+  if (chaseRegStepCardedAlert) chaseRegStepCardedAlert.classList.add("hidden");
+  if (chaseRegStepSelect) chaseRegStepSelect.classList.remove("hidden");
+}
+
+function showChaseCardedAlertStep() {
+  if (chaseRegHeader) chaseRegHeader.classList.add("chase-modal-header-alert");
+  if (chaseRegModalTitle) chaseRegModalTitle.textContent = "茶色有卡版网银 · 提醒";
+  if (chaseRegStepSelect) chaseRegStepSelect.classList.add("hidden");
+  if (chaseRegStepCardedAlert) chaseRegStepCardedAlert.classList.remove("hidden");
+}
+
+function openChaseRegModal() {
+  showMessage("");
+  showChaseSelectStep();
+  if (chaseRegModal) chaseRegModal.classList.remove("hidden");
+}
+
+function closeChaseRegModal() {
+  if (chaseRegModal) chaseRegModal.classList.add("hidden");
+  showChaseSelectStep();
 }
 
 async function saveSkipPreferenceIfChecked() {
@@ -92,7 +138,7 @@ async function saveSkipPreferenceIfChecked() {
   }
 }
 
-async function confirmRunWithTgPrompt(targetLabel, runFn) {
+async function confirmRunWithTgPrompt(targetLabel, runFn, modeReminder = "") {
   let skip = false;
   try {
     if (chrome?.storage?.local) {
@@ -108,6 +154,15 @@ async function confirmRunWithTgPrompt(targetLabel, runFn) {
 
   pendingRunAction = runFn;
   if (tgTargetName) tgTargetName.textContent = targetLabel || "辅助脚本";
+  if (tgModeReminder) {
+    if (modeReminder) {
+      tgModeReminder.textContent = modeReminder;
+      tgModeReminder.classList.remove("hidden");
+    } else {
+      tgModeReminder.textContent = "";
+      tgModeReminder.classList.add("hidden");
+    }
+  }
   if (tgSkipCheckbox) tgSkipCheckbox.checked = false;
   tgModal.classList.remove("hidden");
 }
@@ -157,6 +212,7 @@ if (btnTgContinue) {
 
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
+    if (chaseRegModal && !chaseRegModal.classList.contains("hidden")) closeChaseRegModal();
     if (tgModal && !tgModal.classList.contains("hidden")) closeTgModal();
     if (privacyModal && !privacyModal.classList.contains("hidden")) {
       privacyModal.classList.add("hidden");
@@ -166,6 +222,7 @@ document.addEventListener("keydown", (e) => {
 
 async function launchChaseFeature(messageType) {
   const isPre = messageType === "START_CHASE_PRE";
+  const isCardedEnroll = messageType === "START_CHASE_CARDED_ENROLL";
   btnStartRegister.disabled = true;
   btnStartPre.disabled = true;
   if (btnStartCredit) btnStartCredit.disabled = true;
@@ -176,14 +233,18 @@ async function launchChaseFeature(messageType) {
       launchTitle.textContent = "正在打开 Credit.com 注册";
       launchDesc.innerHTML =
         "正在加载 <strong>Credit.com</strong> 注册页并放开 ITIN 页面校验，请在个人信息页填写 9 开头号码。";
+    } else if (isCardedEnroll) {
+      launchTitle.textContent = "正在跳转至茶色有卡版网银注册";
+      launchDesc.innerHTML =
+        "正在启用本地 <strong>MITM 拦截器</strong>（请求 <code>form/list</code> 时自动将 <code>ssn</code> 替换为 <code>tin</code>），即将打开 Chase 有卡版激活页...";
     } else if (isPre) {
       launchTitle.textContent = "正在跳转至茶色信用卡 Pre-Approval 页面";
       launchDesc.innerHTML =
         "正在加载 <strong>茶色 Pre</strong> 预审组件，<strong>预计需要 6~8 秒</strong>加载完成，请耐心等待...";
     } else {
-      launchTitle.textContent = "正在跳转至茶色网银注册页面";
+      launchTitle.textContent = "正在跳转至茶色空网银注册页面";
       launchDesc.innerHTML =
-        "正在加载 <strong>茶色网银</strong> 注册组件，<strong>预计需要 7~8 秒</strong>跳转到注册页面，请耐心等待...";
+        "正在加载 <strong>茶色空网银</strong> 注册组件，<strong>预计需要 7~8 秒</strong>跳转到注册页面，请耐心等待...";
     }
   }
 
@@ -302,8 +363,52 @@ async function loadBofaCards() {
 }
 
 btnStartRegister.addEventListener("click", () => {
-  confirmRunWithTgPrompt("茶色 网银注册脚本", () => launchChaseFeature("START_REGISTRATION"));
+  openChaseRegModal();
 });
+
+if (btnCloseChaseReg) {
+  btnCloseChaseReg.addEventListener("click", () => closeChaseRegModal());
+}
+
+if (chaseRegModal) {
+  chaseRegModal.addEventListener("click", (e) => {
+    if (e.target === chaseRegModal) closeChaseRegModal();
+  });
+}
+
+if (btnChaseEmpty) {
+  btnChaseEmpty.addEventListener("click", () => {
+    closeChaseRegModal();
+    confirmRunWithTgPrompt(
+      "茶色 空网银注册脚本",
+      () => launchChaseFeature("START_REGISTRATION"),
+      "📌 空网银提醒：进入页面后请选择「I'm new to Chase」，SSN 栏填写 9 位 ITIN（0 HP，5 分钟内有效）。"
+    );
+  });
+}
+
+if (btnChaseCarded) {
+  btnChaseCarded.addEventListener("click", () => {
+    showChaseCardedAlertStep();
+  });
+}
+
+if (btnChaseCardedBack) {
+  btnChaseCardedBack.addEventListener("click", () => {
+    showChaseSelectStep();
+  });
+}
+
+if (btnChaseCardedConfirm) {
+  btnChaseCardedConfirm.addEventListener("click", () => {
+    closeChaseRegModal();
+    confirmRunWithTgPrompt(
+      "茶色 有卡版网银注册脚本 (MITM)",
+      () => launchChaseFeature("START_CHASE_CARDED_ENROLL"),
+      "⚠️ 有卡版提醒：需已持有 Chase 卡号，SSN 栏直接填 9 位 ITIN；请求 form/list 时将自动把 ssn 替换为 tin（5 分钟内有效）。"
+    );
+  });
+}
 
 btnStartPre.addEventListener("click", () => {
   confirmRunWithTgPrompt("茶色 信用卡 Pre 脚本", () => launchChaseFeature("START_CHASE_PRE"));
@@ -723,6 +828,61 @@ if (privacyModal) {
   });
 }
 
+async function checkForUpdate() {
+  try {
+    const updater = window.ITINUpdater;
+    if (!updater || !chrome?.runtime?.getManifest) return;
+    const current = chrome.runtime.getManifest().version;
+    const response = await fetch(updater.UPDATE_API, { cache: "no-store" });
+    if (!response.ok) return;
+    const latest = await response.json();
+    if (!latest || !latest.version || !latest.url || !latest.url.startsWith("https://itin.nranote.com/downloads/")) {
+      return;
+    }
+    if (updater.compareVersions(latest.version, current) <= 0) {
+      if (updateBar) updateBar.classList.add("hidden");
+      return;
+    }
+    if (updateTitle) updateTitle.textContent = `发现新版本 v${latest.version}`;
+    if (updateNotes) {
+      updateNotes.textContent = latest.notes || "检测到可用官方更新，点击「立即更新」在线覆盖扩展目录。";
+    }
+    if (updateBar) updateBar.classList.remove("hidden");
+  } catch (_) {}
+}
+
+if (updateNow) {
+  updateNow.addEventListener("click", async () => {
+    const updater = window.ITINUpdater;
+    if (!updater) {
+      showMessage("更新模块尚未加载，请刷新插件后重试。", "error");
+      return;
+    }
+    const origText = updateNow.textContent;
+    updateNow.disabled = true;
+    updateNow.textContent = "更新中...";
+    showMessage("");
+    try {
+      const result = await updater.applyDirectoryUpdate({ requestPermission: true });
+      if (result && result.updated) {
+        showMessage(result.message || "更新完成，正在重新加载插件...", "success");
+      } else {
+        showMessage((result && result.message) || "当前已是最新版本。", "info");
+        if (updateBar) updateBar.classList.add("hidden");
+      }
+    } catch (err) {
+      if (err && err.name === "AbortError") {
+        showMessage("已取消目录授权，下次可继续点击「立即更新」。", "info");
+      } else {
+        showMessage("在线更新失败：" + ((err && err.message) || "未知错误"), "error");
+      }
+    } finally {
+      updateNow.disabled = false;
+      updateNow.textContent = origText;
+    }
+  });
+}
+
 (function init() {
   try {
     if (chrome?.runtime?.getManifest && extVersionEl) {
@@ -730,4 +890,5 @@ if (privacyModal) {
     }
   } catch (_) {}
   showMainView();
+  checkForUpdate();
 })();

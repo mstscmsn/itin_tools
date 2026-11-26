@@ -3,27 +3,47 @@
 
   chrome.storage.session.get(["hookSession"], (res) => {
     const session = res && res.hookSession;
-    if (!session || (session.feature !== "chaseopen" && session.feature !== "chasepre")) return;
+    if (
+      !session ||
+      (session.feature !== "chaseopen" &&
+        session.feature !== "chasepre" &&
+        session.feature !== "chaseenroll")
+    ) {
+      return;
+    }
     if (!session.expiresAt || session.expiresAt <= Date.now()) return;
-    showLoadingOverlay();
+    showLoadingOverlay(session.feature);
   });
 
-  function showLoadingOverlay() {
+  function showLoadingOverlay(feature) {
     if (document.getElementById("chase-reg-helper-loader-host")) return;
 
-    const isPreCard = window.location.pathname.includes("/application/card");
-    const titleText = isPreCard
-      ? "正在加载 茶色 信用卡 Pre-Approval 页面"
-      : "正在加载 茶色 网银注册页面";
-    const descHtml = isPreCard
-      ? "正在初始化 ITIN 信用卡 Pre 预审组件资源，预计需要 <strong>6~8 秒</strong> 加载完成，请耐心等待..."
-      : "正在初始化注册环境与组件资源，预计需要 <strong>7~8 秒</strong> 跳转到注册页面，请耐心等待...";
-    const stepInitText = isPreCard
-      ? "正在加载 ITIN 信用卡 Pre 预审模块..."
-      : "正在加载核心注册模块...";
-    const stepMidText = isPreCard
-      ? "正在渲染信用卡 Pre-Approval 表单..."
-      : "正在渲染网银注册表单...";
+    const isCardedEnroll =
+      feature === "chaseenroll" || window.location.pathname.includes("/web/auth/enrollment");
+    const isPreCard =
+      !isCardedEnroll &&
+      (feature === "chasepre" || window.location.pathname.includes("/application/card"));
+
+    const titleText = isCardedEnroll
+      ? "正在加载 茶色 有卡版网银注册页面"
+      : isPreCard
+        ? "正在加载 茶色 信用卡 Pre-Approval 页面"
+        : "正在加载 茶色 网银注册页面";
+    const descHtml = isCardedEnroll
+      ? "本地 <strong>MITM 拦截器</strong>已就绪（将在请求 <code>form/list</code> 时自动将 <code>ssn</code> 替换为 <code>tin</code>）。请准备已获批的 Chase 卡号，并在 SSN 栏直接填 9 位 ITIN..."
+      : isPreCard
+        ? "正在初始化 ITIN 信用卡 Pre 预审组件资源，预计需要 <strong>6~8 秒</strong> 加载完成，请耐心等待..."
+        : "正在初始化注册环境与组件资源，预计需要 <strong>7~8 秒</strong> 跳转到注册页面，请耐心等待...";
+    const stepInitText = isCardedEnroll
+      ? "正在加载有卡版网银激活模块..."
+      : isPreCard
+        ? "正在加载 ITIN 信用卡 Pre 预审模块..."
+        : "正在加载核心注册模块...";
+    const stepMidText = isCardedEnroll
+      ? "正在渲染有卡版网银验证表单（SSN 栏直接填 ITIN）..."
+      : isPreCard
+        ? "正在渲染信用卡 Pre-Approval 表单..."
+        : "正在渲染网银注册表单...";
 
     const host = document.createElement("div");
     host.id = "chase-reg-helper-loader-host";
@@ -49,7 +69,7 @@
         }
         .card {
           background: #ffffff;
-          width: 380px;
+          width: 390px;
           max-width: 90vw;
           border-radius: 14px;
           padding: 26px 24px 22px;
@@ -101,6 +121,14 @@
         .desc strong {
           color: #117aca;
         }
+        .desc code {
+          background: #eff6ff;
+          color: #1d4ed8;
+          padding: 1px 5px;
+          border-radius: 4px;
+          font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+          font-size: 12px;
+        }
         .progress-track {
           width: 100%;
           height: 7px;
@@ -125,7 +153,7 @@
         <div class="card">
           <div class="spinner-wrap">
             <div class="spinner"></div>
-            <div class="countdown" id="loader-sec">8s</div>
+            <div class="countdown" id="loader-sec">${isCardedEnroll ? "5s" : "8s"}</div>
           </div>
           <h3 class="title">${titleText}</h3>
           <p class="desc">
@@ -151,7 +179,8 @@
     const barEl = shadow.getElementById("loader-bar");
     const stepEl = shadow.getElementById("loader-step");
 
-    const totalMs = 8000;
+    const totalMs = isCardedEnroll ? 5000 : 8000;
+    const minFormMs = isCardedEnroll ? 1800 : 4500;
     const startTime = Date.now();
     let closed = false;
 
@@ -175,15 +204,14 @@
       if (barEl) barEl.style.width = `${pct}%`;
       if (secEl) secEl.textContent = `${remainSec}s`;
 
-      if (elapsed > 5000 && stepEl) {
+      if (elapsed > totalMs * 0.65 && stepEl) {
         stepEl.textContent = "即将完成加载，请稍候...";
-      } else if (elapsed > 2500 && stepEl) {
+      } else if (elapsed > totalMs * 0.3 && stepEl) {
         stepEl.textContent = stepMidText;
       }
 
-      // If page form is already rendered after at least 4.5s, or 8s elapsed, dismiss
       const hasRenderedForm =
-        elapsed > 4500 &&
+        elapsed > minFormMs &&
         document.body &&
         document.querySelector(
           "input, button[type='submit'], form, mds-text-input, mds-text-input-secure, mds-button"
